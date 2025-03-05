@@ -21,4 +21,37 @@ toolbarMode = "minimal"
 showErrorDetails = false
 
 [logger]
-level = "warning" 
+level = "warning"
+
+[openai]
+# Add your OpenAI API key here for local development
+# For Streamlit Cloud, add this secret in the Streamlit dashboard
+api_key = ""
+model = "gpt-4-turbo-preview"
+
+[weaviate]
+url = "https://r4lc8ocsiucntykapnhma.c0.us-west3.gcp.weaviate.cloud"
+grpc_url = "https://grpc-r4lc8ocsiucntykapnhma.c0.us-west3.gcp.weaviate.cloud"
+# Add your Weaviate API key here for local development
+api_key = ""
+
+[exa]
+# Add your Exa API key here for local development
+api_key = ""
+
+[serper]
+# Add your Serper API key here for local development
+api_key = ""
+
+[qdrant]
+url = "https://0d6f2682-65bf-42fb-b263-e3b40605ffab.us-west-2-0.aws.cloud.qdrant.io"
+# Add your Qdrant API key here for local development
+api_key = ""
+collection = "math_knowledge"
+
+[application]
+debug_mode = false
+model_name = "gpt-3.5-turbo"
+model_temperature = 0
+model_max_tokens = 2048
+track_performance = true 
