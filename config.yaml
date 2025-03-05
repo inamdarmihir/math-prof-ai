@@ -1,0 +1,55 @@
+# Agent Configuration
+agent:
+  name: "Math Tutor Agent"
+  version: "1.0.0"
+  description: "An intelligent mathematics tutoring system"
+
+# Model Settings
+model:
+  embeddings: "text-embedding-3-small"
+  temperature: 0.7
+  max_tokens: 1000
+
+# Knowledge Base Settings
+knowledge_base:
+  vector_store_path: "math_knowledge.faiss"
+  cache_ttl: 3600  # Cache lifetime in seconds
+  similarity_k: 3  # Number of similar problems to retrieve
+  min_similarity_score: 0.7
+
+# Web Search Settings
+web_search:
+  domains:
+    - "mathworld.wolfram.com"
+    - "brilliant.org"
+    - "khanacademy.org"
+  max_results: 5
+  cache_ttl: 86400  # 24 hours
+
+# Evaluation Settings
+evaluation:
+  min_confidence_score: 0.6
+  required_components:
+    - "step_by_step"
+    - "verification"
+    - "explanation"
+  metrics:
+    - "accuracy"
+    - "step_by_step_rate"
+    - "verification_rate"
+    - "user_satisfaction"
+
+# Security Settings
+security:
+  max_input_length: 500
+  rate_limit: 60  # requests per minute
+  inappropriate_terms:
+    - "hack"
+    - "cheat"
+    - "exploit"
+
+# Logging Settings
+logging:
+  level: "INFO"
+  file: "math_agent.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s" 

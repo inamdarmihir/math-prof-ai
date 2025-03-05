@@ -1,0 +1,48 @@
+{
+    "algebra": {
+        "quadratic_equations": [
+            {
+                "question": "Solve the quadratic equation x² + 5x + 6 = 0",
+                "solution": "Step 1: Identify a = 1, b = 5, c = 6\nStep 2: Use factoring method\nx² + 5x + 6 = (x + 2)(x + 3) = 0\nStep 3: x = -2 or x = -3\nStep 4: Verify by substituting back",
+                "difficulty": "beginner"
+            },
+            {
+                "question": "Find the nature of roots for x² - 4x + 5 = 0",
+                "solution": "Step 1: Calculate discriminant b² - 4ac\nb = -4, a = 1, c = 5\nD = (-4)² - 4(1)(5) = 16 - 20 = -4\nStep 2: Since D < 0, roots are complex conjugates",
+                "difficulty": "intermediate"
+            }
+        ],
+        "linear_equations": [
+            {
+                "question": "Solve 2x + 3 = 11",
+                "solution": "Step 1: Subtract 3 from both sides\n2x = 8\nStep 2: Divide both sides by 2\nx = 4\nStep 3: Verify: 2(4) + 3 = 11 ✓",
+                "difficulty": "beginner"
+            }
+        ]
+    },
+    "calculus": {
+        "derivatives": [
+            {
+                "question": "Find the derivative of f(x) = x³ - 2x² + 4x - 1",
+                "solution": "Step 1: Apply power rule to each term\nf'(x) = 3x² - 4x + 4\nStep 2: Verify using first principles (optional)",
+                "difficulty": "intermediate"
+            }
+        ],
+        "integrals": [
+            {
+                "question": "Integrate ∫(2x + 3)dx",
+                "solution": "Step 1: Integrate each term\n∫2x dx + ∫3 dx\nStep 2: Apply power rule\nx² + 3x + C",
+                "difficulty": "beginner"
+            }
+        ]
+    },
+    "geometry": {
+        "triangles": [
+            {
+                "question": "In a right triangle, if one angle is 30°, find the other angles",
+                "solution": "Step 1: One angle is 90° (right angle)\nStep 2: Given angle is 30°\nStep 3: Third angle = 180° - 90° - 30° = 60°\nStep 4: Verify sum = 180°",
+                "difficulty": "beginner"
+            }
+        ]
+    }
+}
