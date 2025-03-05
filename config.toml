@@ -1,3 +1,5 @@
+# Math Agent Configuration File
+
 [theme]
 primaryColor = "#FF4B4B"
 backgroundColor = "#FFFFFF"
@@ -27,7 +29,9 @@ level = "warning"
 # Add your OpenAI API key here for local development
 # For Streamlit Cloud, add this secret in the Streamlit dashboard
 api_key = ""
-model = "gpt-4-turbo-preview"
+model = "gpt-3.5-turbo-16k"
+temperature = 0.2
+max_tokens = 1000
 
 [weaviate]
 url = "https://r4lc8ocsiucntykapnhma.c0.us-west3.gcp.weaviate.cloud"
@@ -44,14 +48,22 @@ api_key = ""
 api_key = ""
 
 [qdrant]
-url = "https://0d6f2682-65bf-42fb-b263-e3b40605ffab.us-west-2-0.aws.cloud.qdrant.io"
-# Add your Qdrant API key here for local development
-api_key = ""
-collection = "math_knowledge"
+url = "http://localhost:6333"
+collection_name = "math_knowledge"
+vector_size = 1536
 
 [application]
-debug_mode = false
-model_name = "gpt-3.5-turbo"
-model_temperature = 0
-model_max_tokens = 2048
-track_performance = true 
+debug = false
+max_history = 10
+timeout = 30
+port = 8501
+
+[logging]
+level = "INFO"
+file = "math_agent.log"
+rotation = "1 MB"
+
+[ui]
+title = "Math Agent"
+description = "A mathematical problem-solving assistant"
+theme = "light" 

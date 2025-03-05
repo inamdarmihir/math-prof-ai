@@ -1,0 +1,42 @@
+import math_agent
+import re
+
+# Test different LaTeX examples
+examples = [
+    # Simple align environment
+    "\\begin{align} x^2 + 2x &= 5 \\\\ x &= -1 ± \\sqrt{6} \\end{align}",
+    
+    # Align environment with dollar signs
+    "$\\begin{align} y = mx + b \\\\ m = \\frac{y_2 - y_1}{x_2 - x_1} \\end{align}$",
+    
+    # Complex example with fractions and integrals
+    "\\begin{align} \\frac{dx}{dt} &= \\frac{3x^2 + 2x}{4t - 1} \\\\ \\int \\frac{1}{x} dx &= \\ln|x| + C \\end{align}",
+    
+    # Incomplete align environment
+    "\\begin{align} f(x) &= x^2 - 4x + 4 \\\\ f'(x) &= 2x - 4",
+    
+    # Square brackets around align
+    "[\\begin{align} \\vec{F} &= m\\vec{a} \\\\ \\vec{p} &= m\\vec{v} \\end{align}]"
+]
+
+# Test each example
+for i, example in enumerate(examples):
+    print(f"\n--- Example {i+1} ---")
+    print("\nInput:")
+    print(example)
+    print("\nOutput:")
+    result = math_agent.fix_latex_formatting(example)
+    print(result)
+    
+    # Special debugging for incomplete align environment (Example 4)
+    if i == 3:
+        print("\nDebugging Example 4:")
+        print(f"Has begin tag: {'\\begin{align' in result}")
+        print(f"Has end tag: {'\\end{align' in result}")
+        # Check if the f'(x) term is present in the output
+        print(f"Has f'(x) term: {\"f'(x)\" in result}")
+        # Add explicit character count
+        print(f"Input length: {len(example)} chars")
+        print(f"Output length: {len(result)} chars")
+    
+    print("-" * 50) 
