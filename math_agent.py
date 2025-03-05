@@ -24,6 +24,42 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 
+
+    Fix common LaTeX formatting issues in the Math Agent output.
+    
+    This function addresses several common formatting problems:
+    1. Removes unnecessary square brackets around align environments
+    2. Fixes backslash spacing issues
+    3. Ensures proper delimiters for block and inline equations
+    
+    Args:
+        text (str): The text containing LaTeX equations
+        
+    Returns:
+        str: Text with properly formatted LaTeX
+    
+def fix_latex_formatting(text):
+    # Fix align environments with square brackets
+    text = re.sub(r'\[\s*\\begin\{align\*?\}(.*?)\\end\{align\*?\}\s*\]', 
+                 r'$$\\begin{align}\1\\end{align}$$', 
+                 text, flags=re.DOTALL)
+    
+    # Fix standalone align environments (without brackets)
+    text = re.sub(r'\\begin\{align\*?\}(.*?)\\end\{align\*?\}', 
+                 r'$$\\begin{align}\1\\end{align}$$', 
+                 text, flags=re.DOTALL)
+    
+    # Fix incorrect line breaks in align environments
+    text = re.sub(r'\\\\(\s+)', r'\\\\ \n', text)
+    
+    # Fix &= spacing issues
+    text = re.sub(r'&=\s+\\', r'&= \\', text)
+    
+    # Ensure single variables are properly formatted with inline math
+    text = re.sub(r'(?<![\\$a-zA-Z0-9])\b([a-zA-Z])\b(?![\\$a-zA-Z0-9=])', r'$\1$', text)
+    
+    return text
+
 # Load environment variables
 load_dotenv()
 
