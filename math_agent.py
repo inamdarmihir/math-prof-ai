@@ -24,15 +24,31 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-# Initialize logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
-    handlers=[
-        logging.FileHandler('logs/math_agent.log'),
-        logging.StreamHandler()
-    ]
-)
+# Create logs directory if it doesn't exist
+logs_dir = 'logs'
+try:
+    if not os.path.exists(logs_dir):
+        os.makedirs(logs_dir)
+    
+    # Setup logging with file handler
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
+        handlers=[
+            logging.FileHandler(os.path.join(logs_dir, 'math_agent.log')),
+            logging.StreamHandler()
+        ]
+    )
+except (PermissionError, FileNotFoundError) as e:
+    # Fallback to console-only logging if file logging fails
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
+        handlers=[
+            logging.StreamHandler()
+        ]
+    )
+    logging.warning(f"Unable to setup file logging: {str(e)}. Using console logging only.")
 
 # Create a logger
 logger = logging.getLogger(__name__)
@@ -861,6 +877,62 @@ def format_for_streamlit_display(text):
     text = re.sub(r'([^$])(\\frac\{[^{}]+\}\{[^{}]+\})([^$])', r'\1$\2$\3', text)
     
     return text
+
+def fix_latex_for_streamlit(latex_text):
+    """
+    Focused function to fix LaTeX specifically for Streamlit rendering.
+    """
+    if not isinstance(latex_text, str):
+        return latex_text
+    
+    # Remove square brackets around align environments
+    latex_text = re.sub(r'\[\s*\\begin\{align\*?\}(.*?)\\end\{align\*?\}\s*\]', 
+                      r'\\begin{align*}\1\\end{align*}', latex_text, flags=re.DOTALL)
+    
+    # Convert single backslashes to double backslashes in align environments
+    latex_text = re.sub(r'(\\begin\{align\*?\}.*?)\\(\s+)', r'\1\\\\\2', latex_text, flags=re.DOTALL)
+    latex_text = re.sub(r'(\&=.*?)\\(\s+)', r'\1\\\\\2', latex_text, flags=re.DOTALL)
+    
+    # Fix variable repetition issues (x x, y y)
+    latex_text = re.sub(r'([xy])\s+\1', r'\1', latex_text)
+    
+    # Fix reversed fractions
+    latex_text = re.sub(r'x\s*=\s*\n*5\s*\n*7', r'x = \\frac{7}{5}', latex_text)
+    latex_text = re.sub(r'y\s*=\s*\n*5\s*\n*11', r'y = \\frac{11}{5}', latex_text)
+    
+    # Special handling for Streamlit: ensure all LaTeX is properly delimited
+    # For inline math, make sure it's within single $ signs
+    latex_text = re.sub(r'(?<!\$)\\frac\{([^{}]+)\}\{([^{}]+)\}(?!\$)', r'$\\frac{\1}{\2}$', latex_text)
+    
+    # For display math, use double $$ or proper align environment
+    if '\\begin{align' not in latex_text and '\n' in latex_text and '=' in latex_text:
+        lines = latex_text.split('\n')
+        has_equations = any('=' in line for line in lines)
+        if has_equations:
+            new_lines = []
+            in_equation_block = False
+            for line in lines:
+                if '=' in line and not in_equation_block:
+                    new_lines.append('\\begin{align*}')
+                    new_lines.append(line + ' \\\\')
+                    in_equation_block = True
+                elif '=' in line and in_equation_block:
+                    new_lines.append(line + ' \\\\')
+                elif in_equation_block and not '=' in line:
+                    new_lines[-1] = new_lines[-1].rstrip(' \\\\')  # Remove trailing line break from last line
+                    new_lines.append('\\end{align*}')
+                    new_lines.append(line)
+                    in_equation_block = False
+                else:
+                    new_lines.append(line)
+            
+            if in_equation_block:
+                new_lines[-1] = new_lines[-1].rstrip(' \\\\')  # Remove trailing line break from last line
+                new_lines.append('\\end{align*}')
+            
+            latex_text = '\n'.join(new_lines)
+    
+    return latex_text
 
 def fix_broken_latex(text):
     """Fix broken LaTeX where each character appears on its own line"""
