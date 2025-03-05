@@ -1,0 +1,53 @@
+{
+  "timestamp": "2025-03-05T18:05:52.468465",
+  "total_problems": 3,
+  "problems_tested": 3,
+  "correct_answers": 2,
+  "avg_confidence": 0.6952380952380953,
+  "avg_response_time": 21.36643687884013,
+  "problem_results": [
+    {
+      "id": "CALC-1",
+      "question": "Find the derivative of f(x) = x^3 - 3x^2 + 2x - 1 with respect to x.",
+      "expected_answer": "3x^2 - 6x + 2",
+      "topic": "Calculus",
+      "subtopic": "Differentiation",
+      "difficulty": "Easy",
+      "problem_id": "CALC-1",
+      "correct": true,
+      "confidence": 1.0,
+      "response_time": 12.991995573043823,
+      "keyword_match_percentage": 1.0,
+      "response": "To find the derivative of the function $f(x) = x^3 - 3x^2 + 2x - 1$ with respect to $x$, we'll apply the power rule for differentiation. The power rule states that if $f(x) = x^n$, then $f'(x) = nx^{n-1}$.\n\nLet's differentiate each term of $f(x)$:\n\n1. For the term $x^3$, applying the power rule gives us $3x^{3-1} = 3x^2$.\n2. For the term $-3x^2$, applying the power rule gives us $-3 \\cdot 2x^{2-1} = -6x$.\n3. For the term $2x$, the derivative is simply $2$, since the derivative of $x$ is $1$.\n4. The derivative of the constant term $-1$ is $0$, since the derivative of any constant is $0$.\n\nPutting it all together, the derivative of $f(x)$ with respect to $x$ is:\n\n$$f'(x) = 3x^2 - 6x + 2.$$"
+    },
+    {
+      "id": "CALC-2",
+      "question": "Evaluate the indefinite integral: \u222b(2x + 3)/(x^2 + 3x + 2) dx",
+      "expected_answer": "log(x^2 + 3x + 2) + C",
+      "topic": "Calculus",
+      "subtopic": "Integration",
+      "difficulty": "Medium",
+      "problem_id": "CALC-2",
+      "correct": true,
+      "confidence": 0.8857142857142857,
+      "response_time": 21.714569091796875,
+      "keyword_match_percentage": 0.8571428571428571,
+      "response": "To evaluate the integral $$\\int \\frac{2x + 3}{x^2 + 3x + 2} dx,$$ we first factor the denominator:\n\nThe denominator $x^2 + 3x + 2$ can be factored into $(x + 1)(x + 2)$. So, the integral becomes\n$$\\int \\frac{2x + 3}{(x + 1)(x + 2)} dx.$$\n\nNext, we use partial fraction decomposition to express the integrand as a sum of fractions. We want to find constants $A$ and $B$ such that\n$$\\frac{2x + 3}{(x + 1)(x + 2)} = \\frac{A}{x + 1} + \\frac{B}{x + 2}.$$\n\nMultiplying both sides by $(x + 1)(x + 2)$ to clear the denominators gives\n$$2x + 3 = A(x + 2) + B(x + 1).$$\n\nExpanding the right side, we get\n$$2x + 3 = Ax + 2A + Bx + B = (A + B)x + (2A + B).$$\n\nEquating coefficients from both sides of the equation, we get two equations:\n1. For the $x$ coefficient: $2 = A + B$\n2. For the constant term: $3 = 2A + B$\n\nSolving this system of equations, we subtract the first equation from the second to eliminate $B$:\n- $(3 = 2A + B)$ minus $(2 = A + B)$ gives $1 = A$, so $A = 1$.\n- Substituting $A = 1$ into $2 = A + B$ gives $2 = 1 + B$, so $B = 1$.\n\nTherefore, the integral becomes\n$$\\int \\left( \\frac{1}{x + 1} + \\frac{1}{x + 2} \\right) dx.$$\n\nIntegrating term by term, we get\n$$\\int \\frac{1}{x + 1} dx + \\int \\frac{1}{x + 2} dx = \\ln|x + 1| + \\ln|x + 2| + C,$$\nwhere $C$ is the constant of integration.\n\nSo, the integral $$\\int \\frac{2x + 3}{x^2 + 3x + 2} dx$$ evaluates to $$\\ln|x + 1| + \\ln|x + 2| + C.$$"
+    },
+    {
+      "id": "CALC-3",
+      "question": "Find the area bounded by the curve y = x^2 and the lines y = 1, y = 4, and x = 0.",
+      "expected_answer": "7/3",
+      "topic": "Calculus",
+      "subtopic": "Definite Integration",
+      "difficulty": "Hard",
+      "problem_id": "CALC-3",
+      "correct": false,
+      "confidence": 0.2,
+      "response_time": 29.392745971679688,
+      "keyword_match_percentage": 0.0,
+      "response": "To find the area bounded by the curve $y = x^2$ and the lines $y = 1$, $y = 4$, and $x = 0$, we need to perform the following steps:\n\n1. **Identify the points of intersection** between the curve and the lines $y = 1$ and $y = 4$.\n2. **Set up the integral** to calculate the area.\n\n### 1. Points of Intersection\n\nFor $y = 1$ and $y = x^2$:\n\\[1 = x^2\\]\n\\[x = \\pm 1\\]\nBut since we are considering the area to the right of $x = 0$, we only take $x = 1$.\n\nFor $y = 4$ and $y = x^2$:\n\\[4 = x^2\\]\n\\[x = \\pm 2\\]\nAgain, considering the area to the right of $x = 0$, we take $x = 2$.\n\n### 2. Setting Up the Integral\n\nThe area can be found by integrating the function $y = x^2$ from $x = 1$ to $x = 2$, and then adding the area of the rectangle formed by the lines $y = 1$, $x = 0$, and $x = 1$ (since the curve starts at $y = 1$ when $x = 1$).\n\n#### Area under the curve from $x = 1$ to $x = 2$:\n\n\\[A_1 = \\int_{1}^{2} x^2 dx\\]\n\n\\[A_1 = \\left[\\frac{1}{3}x^3\\right]_{1}^{2}\\]\n\n\\[A_1 = \\frac{1}{3}(2^3) - \\frac{1}{3}(1^3)\\]\n\n\\[A_1 = \\frac{1}{3}(8) - \\frac{1}{3}(1)\\]\n\n\\[A_1 = \\frac{8}{3} - \\frac{1}{3}\\]\n\n\\[A_1 = \\frac{7}{3}\\]\n\n#### Area of the rectangle:\n\nThe rectangle is formed between $x = 0$ and $x = 1$, and between $y = 1$ and $y = 0$. Thus, its dimensions are $1$ (in the $x$-direction) by $1$ (in the $y$-direction).\n\n\\[A_2 = 1 \\times 1 = 1\\]\n\n#### [NAME_REDACTED]:\n\n\\[A_{\\text{total}} = A_1 + A_2\\]\n\n\\[A_{\\text{total}} = \\frac{7}{3} + 1\\]\n\n\\[A_{\\text{total}} = \\frac{7}{3} + \\frac{3}{3}\\]\n\n\\[A_{\\text{total}} = \\frac{10}{3}\\]\n\nTherefore, the total area bounded by the curve $y = x^2$ and the lines $y = 1$, $y = 4$, and $x = 0$ is $\\frac{10}{3}$ square units."
+    }
+  ],
+  "accuracy": 0.6666666666666666
+}

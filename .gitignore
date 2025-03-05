@@ -1,0 +1,108 @@
+# Environment variables and sensitive information
+.env
+*.env
+.env.*
+.streamlit/secrets.toml
+*.pem
+*.key
+
+# Python virtual environments
+venv/
+env/
+fresh_env/
+ENV/
+.venv
+.Python
+env/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# Local development files
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Qdrant data
+qdrant_data/
+
+# Streamlit secrets
+.streamlit/secrets.toml
+ 
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Mac OS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+logs/
+*.log
+
+# Cache
+.cache/
+.web_cache/
+
+# Weaviate
+.weaviate/
+
+# Backup and temporary files
+*.bak
+*.backup
+*.backup*
+*_backup
+*_backup*
+*.final_backup
+*.original
+*.old
+*.tmp
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log 
