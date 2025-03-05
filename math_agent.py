@@ -335,12 +335,47 @@ def time_operation(func):
     return wrapper
 
 # Initialize OpenAI client
+load_dotenv()  # Ensure environment variables are loaded
+
+# Get OpenAI API configuration
 openai_api_key = os.getenv("OPENAI_API_KEY")
 openai_model = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 openai_temperature = float(os.getenv("OPENAI_TEMPERATURE", "0.0"))
 openai_max_tokens = int(os.getenv("OPENAI_MAX_TOKENS", "4000"))
 
-client = OpenAI(api_key=openai_api_key)
+# Check if OpenAI API key is available
+if not openai_api_key:
+    logger.error("No OpenAI API key found. Please set the OPENAI_API_KEY environment variable.")
+    st.error("""
+    ### OpenAI API Key Not Found
+    
+    To run this application, you need to set up your OpenAI API key:
+    
+    1. Create a `.env` file in the project root
+    2. Add your API key: `OPENAI_API_KEY=your_api_key_here`
+    3. Restart the application
+    
+    If you're running in a cloud environment, configure the OPENAI_API_KEY in your environment variables.
+    """)
+    client = None
+else:
+    try:
+        client = OpenAI(api_key=openai_api_key)
+        logger.info("OpenAI client initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize OpenAI client: {str(e)}")
+        st.error(f"""
+        ### Error Initializing OpenAI Client
+        
+        There was a problem initializing the OpenAI client. This could be due to:
+        
+        - Invalid API key format
+        - Network connectivity issues
+        - OpenAI service disruption
+        
+        Please check your API key and connection.
+        """)
+        client = None
 
 # Initialize Qdrant client for vector search
 qdrant_url = os.getenv("QDRANT_URL")
@@ -727,6 +762,18 @@ def process_query(query, history=None):
     Returns:
         str: Answer to the mathematical question with properly formatted LaTeX
     """
+    # First check if OpenAI client is available
+    global client
+    if client is None:
+        logger.error("Cannot process query: OpenAI client is not initialized")
+        return """
+        ### OpenAI API Not Available
+        
+        This application requires a valid OpenAI API key to process math queries.
+        
+        Please set up your API key as described in the error message above, then try again.
+        """
+        
     start_time = time.time()
     
     # Extract equations from the query
@@ -817,10 +864,24 @@ def process_query(query, history=None):
         logger.info(f"Query processed in {processing_time:.2f} seconds")
         
         return sanitized_answer
-    
     except Exception as e:
-        logger.error(f"Error processing query: {e}")
-        return f"I encountered an error while processing your question. Please try again or rephrase your question.\n\nTechnical details: {str(e)}"
+        logger.error(f"Error while calling OpenAI API: {str(e)}")
+        sanitized_answer = f"""
+        ### Error Processing Query
+        
+        There was an error processing your math query. This could be due to:
+        
+        - API rate limiting
+        - Network connectivity issues
+        - Service disruption
+        
+        Error details: {str(e)}
+        
+        Please try again later or contact support if the issue persists.
+        """
+        
+        # Continue with the rest of the function to ensure we return a response
+        return sanitized_answer
 
 def format_for_streamlit_display(text):
     """
@@ -1151,8 +1212,6 @@ def main():
                                 st.write(fixed_content)
                     else:
                         st.write(content)
-            else:
-                st.chat_message("user").write(content)
         else:
             # For assistant messages, extract and properly display LaTeX content
             with st.chat_message("assistant"):
