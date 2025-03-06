@@ -254,7 +254,7 @@ def benchmark_problems(problems, args):
         Dictionary with benchmark results
     """
     results = {
-        "timestamp": datetime.datetime.now().isoformat(),
+        "timestamp": datetime.now().isoformat(),
         "problems_tested": len(problems),
         "model_used": os.environ.get("OPENAI_MODEL", "gpt-4-turbo-preview"),
         "correct_count": 0,
@@ -716,13 +716,33 @@ def main():
     parser = argparse.ArgumentParser(description='Enhanced JEE Benchmark Tool for Math Agent')
     parser.add_argument('--output-dir', default='.', help='Directory to save output files')
     parser.add_argument('--output-file', default='jee_enhanced_benchmark_results.json', help='Output JSON file name')
+    parser.add_argument('--output', default=None, help='Full path to output JSON file (alternative to --output-dir and --output-file)')
     parser.add_argument('--report-file', default='jee_enhanced_benchmark_results.html', help='Output HTML report file name')
     parser.add_argument('--max-problems', type=int, default=None, help='Maximum number of problems to test')
     parser.add_argument('--focus-weak-areas', action='store_true', help='Focus on previously weak areas (geometry, vectors, probability)')
+    parser.add_argument('--topic', type=str, default=None, help='Filter problems by topic (e.g., algebra, geometry, probability, vectors)')
+    parser.add_argument('--difficulty', type=str, default=None, help='Filter problems by difficulty (Easy, Medium, Hard)')
+    parser.add_argument('--model', type=str, default=None, help='OpenAI model to use for testing')
     args = parser.parse_args()
+    
+    # If --output is provided, extract directory and filename
+    if args.output:
+        output_dir = os.path.dirname(args.output)
+        if output_dir:
+            args.output_dir = output_dir
+        args.output_file = os.path.basename(args.output)
+        
+        # Set report file in the same directory with HTML extension
+        report_name = os.path.splitext(args.output_file)[0] + '.html'
+        args.report_file = report_name
     
     # Ensure output directory exists
     os.makedirs(args.output_dir, exist_ok=True)
+    
+    # Set model if provided
+    if args.model:
+        os.environ["OPENAI_MODEL"] = args.model
+        logger.info(f"Using model: {args.model}")
     
     # Load original problems
     original_problems = load_original_problems()
@@ -734,6 +754,18 @@ def main():
     else:
         all_problems = original_problems
         logger.info(f"Testing standard problem set: {len(all_problems)} problems")
+    
+    # Filter by topic if specified
+    if args.topic:
+        topic_lower = args.topic.lower()
+        all_problems = [p for p in all_problems if p.get('topic', '').lower() == topic_lower]
+        logger.info(f"Filtered to {len(all_problems)} problems for topic: {args.topic}")
+    
+    # Filter by difficulty if specified
+    if args.difficulty:
+        difficulty_lower = args.difficulty.lower()
+        all_problems = [p for p in all_problems if p.get('difficulty', '').lower() == difficulty_lower]
+        logger.info(f"Filtered to {len(all_problems)} problems for difficulty: {args.difficulty}")
     
     # Run benchmarks
     results = benchmark_problems(all_problems, args)
