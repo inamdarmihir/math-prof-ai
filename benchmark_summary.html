@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Agent JEE Benchmark Summary</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .summary {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .good {
+            background-color: #d4edda;
+        }
+        .medium {
+            background-color: #fff3cd;
+        }
+        .poor {
+            background-color: #f8d7da;
+        }
+        .insights {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .timestamp {
+            text-align: right;
+            font-size: 0.8em;
+            color: #6c757d;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Math Agent JEE Benchmark Results</h1>
+    
+    <div class="summary">
+        <h2>Overall Performance</h2>
+        <p>
+            The Math Agent was evaluated on 28 JEE-level problems across 9 mathematical domains. 
+            The agent correctly solved <strong>13 out of 28 problems</strong>, achieving an overall 
+            accuracy of <strong>46.4%</strong>.
+        </p>
+    </div>
+
+    <h2>Key Metrics</h2>
+    <table>
+        <tr>
+            <th>Metric</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Overall Accuracy</td>
+            <td>46.4%</td>
+        </tr>
+        <tr>
+            <td>Problems Tested</td>
+            <td>28</td>
+        </tr>
+        <tr>
+            <td>Average Confidence</td>
+            <td>59.5%</td>
+        </tr>
+        <tr>
+            <td>Average Response Time</td>
+            <td>20.74 seconds</td>
+        </tr>
+    </table>
+
+    <h2>Topic-wise Performance</h2>
+    <table>
+        <tr>
+            <th>Topic</th>
+            <th>Accuracy</th>
+            <th>Confidence</th>
+            <th>Notes</th>
+        </tr>
+        <tr class="good">
+            <td>Algebra</td>
+            <td>80.0%</td>
+            <td>78.0%</td>
+            <td>Best performing domain (4/5 correct)</td>
+        </tr>
+        <tr class="good">
+            <td>Trigonometry</td>
+            <td>75.0%</td>
+            <td>72.7%</td>
+            <td>Strong performance (3/4 correct)</td>
+        </tr>
+        <tr class="medium">
+            <td>Calculus</td>
+            <td>50.0%</td>
+            <td>58.1%</td>
+            <td>Mixed results (3/6 correct)</td>
+        </tr>
+        <tr class="medium">
+            <td>Differential Equations</td>
+            <td>50.0%</td>
+            <td>76.0%</td>
+            <td>High confidence (1/2 correct)</td>
+        </tr>
+        <tr class="medium">
+            <td>Complex Numbers</td>
+            <td>50.0%</td>
+            <td>80.0%</td>
+            <td>Very high confidence (1/2 correct)</td>
+        </tr>
+        <tr class="medium">
+            <td>3D Geometry</td>
+            <td>50.0%</td>
+            <td>54.3%</td>
+            <td>Medium confidence (1/2 correct)</td>
+        </tr>
+        <tr class="poor">
+            <td>Coordinate Geometry</td>
+            <td>0.0%</td>
+            <td>34.8%</td>
+            <td>Struggled significantly (0/3 correct)</td>
+        </tr>
+        <tr class="poor">
+            <td>Vectors</td>
+            <td>0.0%</td>
+            <td>36.0%</td>
+            <td>Struggled significantly (0/2 correct)</td>
+        </tr>
+        <tr class="poor">
+            <td>Probability</td>
+            <td>0.0%</td>
+            <td>20.0%</td>
+            <td>Lowest confidence and performance (0/2 correct)</td>
+        </tr>
+    </table>
+
+    <h2>Difficulty-wise Performance</h2>
+    <table>
+        <tr>
+            <th>Difficulty</th>
+            <th>Accuracy</th>
+            <th>Problems</th>
+        </tr>
+        <tr class="medium">
+            <td>Easy</td>
+            <td>50.0%</td>
+            <td>2/4 correct</td>
+        </tr>
+        <tr class="medium">
+            <td>Medium</td>
+            <td>52.9%</td>
+            <td>9/17 correct</td>
+        </tr>
+        <tr class="poor">
+            <td>Hard</td>
+            <td>28.6%</td>
+            <td>2/7 correct</td>
+        </tr>
+    </table>
+
+    <div class="insights">
+        <h2>Analysis and Insights</h2>
+        <ol>
+            <li>
+                <strong>Strongest in Algebra and Trigonometry:</strong> The agent performs exceptionally well in algebraic 
+                problems and trigonometric calculations, with high accuracy and confidence.
+            </li>
+            <li>
+                <strong>Challenges with Geometry and Probability:</strong> The agent struggles most with coordinate 
+                geometry, vectors, and probability problems, suggesting these areas need improvement.
+            </li>
+            <li>
+                <strong>Confidence Correlation:</strong> In most cases, the agent's confidence correlates with its accuracy, 
+                with notable exceptions in Differential Equations and Complex Numbers where confidence exceeds performance.
+            </li>
+            <li>
+                <strong>Difficulty Scaling:</strong> Performance declines as problem difficulty increases, with a significant 
+                drop for hard problems (28.6% accuracy).
+            </li>
+        </ol>
+    </div>
+
+    <div class="timestamp">
+        Benchmark completed: March 6, 2025 | Report generated: March 6, 2025
+    </div>
+</body>
+</html> 

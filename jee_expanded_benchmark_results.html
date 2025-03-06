@@ -1,0 +1,1780 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>JEE Benchmark Results</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1200px; margin: 0 auto; padding: 20px; }
+            h1, h2, h3 { color: #2c3e50; }
+            .summary { background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
+            .summary-stats { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 15px; }
+            .stat-card { background-color: white; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex: 1; min-width: 200px; }
+            .stat-value { font-size: 24px; font-weight: bold; margin-top: 10px; color: #3498db; }
+            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+            th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #ddd; }
+            th { background-color: #f2f2f2; }
+            tr:hover { background-color: #f5f5f5; }
+            .correct { color: green; }
+            .incorrect { color: red; }
+            .plots { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
+            .plot { flex: 1; min-width: 500px; margin-bottom: 20px; }
+            .plot img { max-width: 100%; height: auto; border: 1px solid #ddd; }
+            .response { background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; white-space: pre-wrap; }
+            .difficulty-easy { background-color: #d4edda; }
+            .difficulty-medium { background-color: #fff3cd; }
+            .difficulty-hard { background-color: #f8d7da; }
+            .progress-container { width: 100%; background-color: #f3f3f3; border-radius: 5px; }
+            .progress-bar { height: 30px; border-radius: 5px; }
+        </style>
+    </head>
+    <body>
+        <h1>JEE Benchmarking Results for Math Agent</h1>
+        <p>Generated on: 2025-03-06 11:20:26</p>
+        
+        <div class="summary">
+            <h2>Summary</h2>
+            <div class="summary-stats">
+                <div class="stat-card">
+                    <h3>Accuracy</h3>
+                    <div class="stat-value">46.4%</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 46.42857142857143%; background-color: #ff6b6b;">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Problems Tested</h3>
+                    <div class="stat-value">28</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg. Confidence</h3>
+                    <div class="stat-value">59.5%</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg. Response Time</h3>
+                    <div class="stat-value">20.74s</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Performance Visualization</h2>
+        <div class="plots">
+            <div class="plot">
+                <h3>Accuracy by Topic</h3>
+                <img src="benchmark_plots/accuracy_by_topic.png" alt="Accuracy by Topic">
+            </div>
+            <div class="plot">
+                <h3>Accuracy by Difficulty</h3>
+                <img src="benchmark_plots/accuracy_by_difficulty.png" alt="Accuracy by Difficulty">
+            </div>
+            <div class="plot">
+                <h3>Average Response Time by Topic</h3>
+                <img src="benchmark_plots/response_time_by_topic.png" alt="Response Time by Topic">
+            </div>
+            <div class="plot">
+                <h3>Confidence Score Distribution</h3>
+                <img src="benchmark_plots/confidence_distribution.png" alt="Confidence Distribution">
+            </div>
+        </div>
+        
+        <h2>Detailed Results</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Topic</th>
+                <th>Difficulty</th>
+                <th>Question</th>
+                <th>Expected Answer</th>
+                <th>Correct</th>
+                <th>Confidence</th>
+                <th>Response Time</th>
+                <th>Details</th>
+            </tr>
+    
+            <tr class="difficulty-easy">
+                <td>CALC-1</td>
+                <td>Calculus</td>
+                <td>Easy</td>
+                <td>Find the derivative of f(x) = x^3 - 3x^2 + 2x - 1 with respect to x.</td>
+                <td>3x^2 - 6x + 2</td>
+                <td class="correct">True</td>
+                <td>100.0%</td>
+                <td>24.02s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the derivative of the function $f(x) = x^3 - 3x^2 + 2x - 1$ with respect to $x$, we'll apply the power rule for differentiation. The power rule states that if $f(x) = x^n$, then $f'(x) = nx^{n-1}$.
+
+Let's differentiate each term of $f(x)$ step by step:
+
+1. **Differentiating $x^3$:**
+
+Using the power rule, the derivative of $x^3$ is $3x^{3-1} = 3x^2$.
+
+2. **Differentiating $-3x^2$:**
+
+Similarly, the derivative of $-3x^2$ is $-3 \cdot 2x^{2-1} = -6x$.
+
+3. **Differentiating $2x$:**
+
+For the term $2x$, which is essentially $2x^1$, the derivative is $2 \cdot 1x^{1-1} = 2$.
+
+4. **Differentiating $-1$:**
+
+The derivative of $a$ constant is $0$, so the derivative of $-1$ is $0$.
+
+Combining all these results, the derivative of $f(x)$, denoted as $f'(x)$ or $\frac{df}{dx}$, is:
+
+\[
+f'($x$) = 3x^2 - 6x + 2
+\]
+
+Therefore, the derivative of $f(x) = x^3 - 3x^2 + 2x - 1$ with respect to $x$ is $f'(x) = 3x^2 - 6x + 2$.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>CALC-2</td>
+                <td>Calculus</td>
+                <td>Medium</td>
+                <td>Evaluate the indefinite integral: ∫(2x + 3)/(x^2 + 3x + 2) dx</td>
+                <td>log(x^2 + 3x + 2) + C</td>
+                <td class="correct">True</td>
+                <td>88.6%</td>
+                <td>21.08s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To evaluate the indefinite integral $\int \frac{2x + 3}{x^2 + 3x + 2} \, dx$, we first factor the denominator:
+
+\[
+x^2 + 3x + 2 = ($x$ + 1)($x$ + 2)
+\]
+
+Next, we attempt to decompose the fraction into partial fractions. The general form for this decomposition is:
+
+\[
+\frac{2x + 3}{($x$ + 1)($x$ + 2)} = \frac{A}{x + 1} + \frac{B}{x + 2}
+\]
+
+Multiplying both sides by the common denominator $(x + 1)(x + 2)$ to clear the fractions, we get:
+
+\[
+2x + 3 = A($x$ + 2) + B($x$ + 1)
+\]
+
+Expanding the right side gives:
+
+\[
+2x + 3 = Ax + 2A + Bx + $B$ = ($A$ + $B$)x + (2A + $B$)
+\]
+
+Equating coefficients from both sides of the equation, we get $a$ system of equations:
+
+\[
+\begin{align*}
+A + B &=  2 \\ 
+2A + B &=  3
+\end{align*}
+\]
+
+Subtracting the first equation from the second gives:
+
+\[
+\begin{align*}
+2A + B - (A + B) &=  3 - 2 \\ 
+A &=  1
+\end{align*}
+\]
+
+Substituting $A = 1$ into the first equation:
+
+\[
+\begin{align*}
+1 + B &=  2 \\ 
+B &=  1
+\end{align*}
+\]
+
+Now that we have $A = 1$ and $B = 1$, we can write the original integral as:
+
+\[
+\int \frac{2x + 3}{x^2 + 3x + 2} \, dx = \int \frac{1}{x + 1} \, dx + \int \frac{1}{x + 2} \, dx
+\]
+
+Integrating each term separately:
+
+\[
+\int \frac{1}{x + 1} \, dx = \ln|x + 1| + $C_1$
+\]
+
+\[
+\int \frac{1}{x + 2} \, dx = \ln|x + 2| + $C_2$
+\]
+
+Since the constants of integration $C_1$ and $C_2$ can be combined into $a$ single constant $C$, the final answer is:
+
+\[
+\int \frac{2x + 3}{x^2 + 3x + 2} \, dx = \ln|x + 1| + \ln|x + 2| + $C$
+\]
+
+Or, more compactly:
+
+\[
+\int \frac{2x + 3}{x^2 + 3x + 2} \, dx = \ln|x^2 + 3x + 2| + $C$
+\]
+
+where $C$ is the constant of integration.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-hard">
+                <td>CALC-3</td>
+                <td>Calculus</td>
+                <td>Hard</td>
+                <td>Find the area bounded by the curve y = x^2 and the lines y = 1, y = 4, and x = 0.</td>
+                <td>7/3</td>
+                <td class="incorrect">False</td>
+                <td>20.0%</td>
+                <td>16.15s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the area bounded by the curve $y = x^2$ and the lines $y = 1$, $y = 4$, and $x = 0$, we will follow these steps:
+
+1. **Sketch the region**: It helps to visualize the area we're calculating. The curve $y = x^2$ is $a$ parabola opening upwards. The lines $y = 1$ and $y = 4$ are horizontal, and $x = 0$ is the y-axis. The area of interest is to the right of the y-axis, between $y = 1$ and $y = 4$ along the curve.
+
+2. **Find the x-values where the curve intersects $y = 1$ and $y = 4$**: These intersections will provide the limits of integration.
+
+\begin{align*}
+y = x^2 &\implies x^2 = 1 \quad \text{and} \quad x^2 = 4 \\ 
+&\implies x = \pm 1 \quad \text{and} \quad x = \pm 2
+\end{align*}
+
+Since we are considering the area to the right of the y-axis, we only take the positive solutions: $x = 1$ for $y = 1$ and $x = 2$ for $y = 4$.
+
+3. **Set up the integral**: The area $A$ can be found by integrating the function $y = x^2$ from $x = 1$ to $x = 2$.
+
+\begin{align*}
+A &=  \int_{1}^{2} x^2 \, dx
+\end{align*}
+
+4. **Calculate the integral**:
+
+\begin{align*}
+A &=  \left$\frac{1}{3}x^3 \right$_{1}^{2} \\ 
+&=  \frac{1}{3}(2^3) - \frac{1}{3}(1^3) \\ 
+&=  \frac{1}{3}(8) - \frac{1}{3}(1) \\ 
+&=  \frac{8}{3} - \frac{1}{3} \\ 
+&=  \frac{7}{3}
+\end{align*}
+
+Therefore, the area bounded by the curve $y = x^2$, the lines $y = 1$, $y = 4$, and $x = 0$ is $\frac{7}{3}$ square units.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-easy">
+                <td>ALG-1</td>
+                <td>Algebra</td>
+                <td>Easy</td>
+                <td>Solve the equation: 2x^2 - 5x + 3 = 0</td>
+                <td>x = 1 or x = 3/2</td>
+                <td class="correct">True</td>
+                <td>88.6%</td>
+                <td>16.00s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To solve the quadratic equation $2x^2 - 5x + 3 = 0$, we'll use the quadratic formula. The quadratic formula is given by:
+
+\[
+$x$ = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\]
+
+where $a$, $b$, and $c$ are the coefficients of the quadratic equation $ax^2 + bx + c = 0$. In this case, $a = 2$, $b = -5$, and $c = 3$.
+
+Let's plug these values into the formula:
+
+\[
+$x$ = \frac{-(-5) \pm \sqrt{(-5)^2 - 4 \cdot 2 \cdot 3}}{2 \cdot 2}
+\]
+
+Simplify inside the square root:
+
+\[
+$x$ = \frac{5 \pm \sqrt{25 - 24}}{4}
+\]
+
+\[
+$x$ = \frac{5 \pm \sqrt{1}}{4}
+\]
+
+Since $\sqrt{1} = 1$, we have:
+
+\[
+$x$ = \frac{5 \pm 1}{4}
+\]
+
+This gives us two possible solutions for $x$:
+
+1. When using the positive sign ($+$),
+\[
+$x$ = \frac{5 + 1}{4} = \frac{6}{4} = \frac{3}{2}
+\]
+
+2. When using the negative sign ($-$),
+\[
+$x$ = \frac{5 - 1}{4} = \frac{4}{4} = 1
+\]
+
+Therefore, the solutions to the equation $2x^2 - 5x + 3 = 0$ are $x = \frac{3}{2}$ and $x = 1$.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>ALG-2</td>
+                <td>Algebra</td>
+                <td>Medium</td>
+                <td>If the sum of the first n terms of an AP is 3n^2 + 5n, then find the nth term of this AP.</td>
+                <td>6n + 2</td>
+                <td class="correct">True</td>
+                <td>100.0%</td>
+                <td>21.10s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the $n$th term of an arithmetic progression (AP) given the sum of the first $n$ terms, we can use the formula for the sum of an AP and relate it to the given sum formula. The sum of the first $n$ terms of an AP is given by:
+
+\[ S_n = \frac{n}{2} $2a + (n-1)d$ \]
+
+where $S_n$ is the sum of the first $n$ terms, $a$ is the first term, $d$ is the common difference, and $n$ is the number of terms. However, we are given that:
+
+\$S_n = 3n^2 + 5n \$
+
+To find the $n$th term, $T_n$, we can use the relation:
+
+\$T_n = S_n - S_{n-1} \$
+
+where $S_n$ is the sum of the first $n$ terms and $S_{n-1}$ is the sum of the first $n-1$ terms. Let's calculate $T_n$ step by step:
+
+1. **Calculate $S_n$:** Already given as $3n^2 + 5n$.
+
+2. **Calculate $S_{n-1}$:** Substitute $n-1$ into the given formula for $S_n$:
+
+\begin{align*}
+S_{n-1} &=  3(n-1)^2 + 5(n-1) \\ 
+&=  3(n^2 - 2n + 1) + 5n - 5 \\ 
+&=  3n^2 - 6n + 3 + 5n - 5 \\ 
+&=  3n^2 - n - 2
+\end{align*}
+
+3. **Calculate $T_n$:**
+
+\begin{align*}
+T_n &=  S_n - S_{n-1} \\ 
+&=  (3n^2 + 5n) - (3n^2 - n - 2) \\ 
+&=  3n^2 + 5n - 3n^2 + n + 2 \\ 
+&=  6n + 2
+\end{align*}
+
+Therefore, the $n$th term of the arithmetic progression is $T_n = 6n + 2$.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-hard">
+                <td>ALG-3</td>
+                <td>Algebra</td>
+                <td>Hard</td>
+                <td>Find the sum of the series: ∑(n(n+1)(n+2)) for n from 1 to 20</td>
+                <td>1830</td>
+                <td class="incorrect">False</td>
+                <td>20.0%</td>
+                <td>22.83s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the sum of the series $\sum_{n=1}^{20} n(n+1)(n+2)$, we can simplify the expression inside the sum first. The expression $n(n+1)(n+2)$ can be expanded using algebraic manipulation.
+
+\[
+n(n+1)(n+2) = n(n^2 + 2n + $n$ + 2) = n(n^2 + 3n + 2)
+\]
+\[
+= n^3 + 3n^2 + 2n
+\]
+
+So, the series becomes $\sum_{n=1}^{20} (n^3 + 3n^2 + 2n)$. This can be broken down into three separate sums:
+
+\[
+\sum_{$n = 1$}^{20} n^3 + 3\sum_{$n = 1$}^{20} n^2 + 2\sum_{$n = 1$}^{20} $n$
+\]
+
+We can use the formulas for the sum of cubes, squares, and the arithmetic series respectively:
+
+1. $\sum_{n=1}^{k} n^3 = \left(\frac{k(k+1)}{2}\right)^2$
+2. $\sum_{n=1}^{k} n^2 = \frac{k(k+1)(2k+1)}{6}$
+3. $\sum_{n=1}^{k} n = \frac{k(k+1)}{2}$
+
+Let's calculate each part with $k=20$:
+
+1. For $\sum_{n=1}^{20} n^3$:
+\[
+\left(\frac{20(20+1)}{2}\right)^2 = \left(\frac{20 \cdot 21}{2}\right)^2 = (210)^2 = 44100
+\]
+
+2. For $3\sum_{n=1}^{20} n^2$:
+\[
+3 \cdot \frac{20(20+1)(2 \cdot 20 + 1)}{6} = 3 \cdot \frac{20 \cdot 21 \cdot 41}{6} = 3 \cdot 2870 = 8610
+\]
+
+3. For $2\sum_{n=1}^{20} n$:
+\[
+2 \cdot \frac{20(20+1)}{2} = 2 \cdot 210 = 420
+\]
+
+Adding these results together gives the total sum of the series:
+
+\[
+44100 + 8610 + 420 = 53130
+\]
+
+Therefore, the sum of the series $\sum_{n=1}^{20} n(n+1)(n+2)$ is $53,130$.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-easy">
+                <td>GEOM-1</td>
+                <td>Coordinate Geometry</td>
+                <td>Easy</td>
+                <td>Find the distance between the points (3, 4) and (-2, 8).</td>
+                <td>√41</td>
+                <td class="incorrect">False</td>
+                <td>20.0%</td>
+                <td>11.16s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the distance between two points $(x_1, y_1)$ and $(x_2, y_2)$ in $a$ plane, we use the distance formula derived from the Pythagorean theorem:
+
+\[
+$d$ = \sqrt{($x_2$ - $x_1$)^2 + ($y_2$ - $y_1$)^2}
+\]
+
+Given the points $(3, 4)$ and $(-2, 8)$, we can substitute these values into the formula:
+
+\[
+$x_1$ = 3, \quad $y_1$ = 4, \quad $x_2$ = -2, \quad $y_2$ = 8
+\]
+
+\begin{align}
+d &=  \sqrt{(-2 - 3)^2 + (8 - 4)^2} \\ 
+&=  \sqrt{(-5)^2 + (4)^2} \\ 
+&=  \sqrt{25 + 16} \\ 
+&=  \sqrt{41}
+\end{align}
+
+Therefore, the distance between the points $(3, 4)$ and $(-2, 8)$ is $\sqrt{41}$ units.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>GEOM-2</td>
+                <td>Coordinate Geometry</td>
+                <td>Medium</td>
+                <td>Find the equation of the circle passing through the origin and having its center at (2, 3).</td>
+                <td>x^2 + y^2 - 4x - 6y = 0</td>
+                <td class="incorrect">False</td>
+                <td>64.4%</td>
+                <td>15.26s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the equation of $a$ circle passing through the origin (0, 0) and having its center at (2, 3), we'll follow these steps:
+
+1. **[NAME_REDACTED] of $a$ Circle**: The general equation of $a$ circle with center at $(h, k)$ and radius $r$ is given by:
+   \[
+   ($x$ - $h$)^2 + ($y$ - $k$)^2 = r^2
+   \]
+   For our circle, the center is at $(2, 3)$, so $h = 2$ and $k = 3$. Thus, the equation becomes:
+   \[
+   ($x$ - 2)^2 + ($y$ - 3)^2 = r^2
+   \]
+
+2. **Finding the Radius**: Since the circle passes through the origin (0, 0), we can substitute $x = 0$ and $y = 0$ into the equation to find the radius $r$.
+   \begin{align*}
+(0 - 2)^2 + (0 - 3)^2 &=  r^2 \\ 
+4 + 9 &=  r^2 \\ 
+13 &=  r^2
+\end{align*}
+
+3. **Equation of the Circle**: Now that we know $r^2 = 13$, we can write the final equation of the circle:
+   \[
+   ($x$ - 2)^2 + ($y$ - 3)^2 = 13
+   \]
+
+Therefore, the equation of the circle passing through the origin and having its center at (2, 3) is \(($x$ - 2)^2 + ($y$ - 3)^2 = 13\).</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>GEOM-3</td>
+                <td>Coordinate Geometry</td>
+                <td>Medium</td>
+                <td>Find the area of the triangle formed by the points (1, 2), (3, 4), and (5, 0).</td>
+                <td>8</td>
+                <td class="incorrect">False</td>
+                <td>20.0%</td>
+                <td>12.69s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the area of $a$ triangle formed by three points $(x_1, y_1)$, $(x_2, y_2)$, and $(x_3, y_3)$ in the Cartesian plane, we can use the formula:
+
+\[
+\text{Area} = \frac{1}{2} |x_1($y_2$ - $y_3$) + x_2($y_3$ - $y_1$) + x_3($y_1$ - $y_2$)|
+\]
+
+Given the points $(1, 2)$, $(3, 4)$, and $(5, 0)$, we can substitute these into the formula:
+
+\[
+\text{Area} = \frac{1}{2} |1(4 - 0) + 3(0 - 2) + 5(2 - 4)|
+\]
+
+Simplifying the expression inside the absolute value:
+
+\[
+\begin{align*}
+\text{Area} &=  \frac{1}{2} |4 + 3(-2) + 5(-2)| \\ 
+&=  \frac{1}{2} |4 - 6 - 10| \\ 
+&=  \frac{1}{2} |-12| \\ 
+&=  \frac{1}{2} \times 12 \\ 
+&=  6
+\end{align*}
+\]
+
+Therefore, the area of the triangle formed by the points $(1, 2)$, $(3, 4)$, and $(5, 0)$ is $6$ square units.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>TRIG-1</td>
+                <td>Trigonometry</td>
+                <td>Medium</td>
+                <td>Prove that: sin(A+B)sin(A-B) = sin^2(A) - sin^2(B)</td>
+                <td>Proof using sin(A+B)sin(A-B) = sin^2(A) - sin^2(B)</td>
+                <td class="correct">True</td>
+                <td>88.6%</td>
+                <td>17.82s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To prove the identity $\sin(A+B)\sin(A-B) = \sin^2(A) - \sin^2(B)$, we'll start by expanding the left-hand side using the sine addition and subtraction formulas. The sine addition formula is $\sin(A+B) = \sin A \cos B + \cos A \sin B$, and the sine subtraction formula is $\sin(A-B) = \sin A \cos B - \cos A \sin B$. 
+
+Let's expand the left-hand side:
+
+\begin{align*}
+\sin(A+B)\sin(A-B) &=  (\sin A \cos B + \cos A \sin B)(\sin A \cos B - \cos A \sin B) \\ 
+&=  \sin A \cos B \sin A \cos B - \sin A \cos B \cos A \sin B + \cos A \sin B \sin A \cos B - \cos A \sin B \cos A \sin B \\ 
+&=  \sin^2 A \cos^2 B - \sin A \cos A \sin B \cos B + \sin A \cos A \sin B \cos B - \cos^2 A \sin^2 B \\ 
+&=  \sin^2 A \cos^2 B - \cos^2 A \sin^2 B.
+\end{align*}
+
+Now, we know that $\cos^2 B = 1 - \sin^2 B$ and $\cos^2 A = 1 - \sin^2 A$ from the Pythagorean identity. Let's substitute these identities into our equation:
+
+\begin{align*}
+\sin^2 A \cos^2 B - \cos^2 A \sin^2 B &=  \sin^2 A (1 - \sin^2 B) - (1 - \sin^2 A) \sin^2 B \\ 
+&=  \sin^2 A - \sin^2 A \sin^2 B - \sin^2 B + \sin^2 A \sin^2 B \\ 
+&=  \sin^2 A - \sin^2 B.
+\end{align*}
+
+Therefore, we have shown that $\sin(A+B)\sin(A-B) = \sin^2(A) - \sin^2(B)$, completing the proof.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>TRIG-2</td>
+                <td>Trigonometry</td>
+                <td>Medium</td>
+                <td>If tan A = 3/4 and tan B = 5/12, find tan(A+B).</td>
+                <td>56/33</td>
+                <td class="incorrect">False</td>
+                <td>20.0%</td>
+                <td>16.69s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find $\tan(A+B)$ when given $\tan A = \frac{3}{4}$ and $\tan B = \frac{5}{12}$, we can use the formula for the tangent of the sum of two angles:
+
+\[
+\tan(A+B) = \frac{\tan $A$ + \tan B}{1 - \tan $A$ \cdot \tan B}
+\]
+
+Substituting the given values into this formula:
+
+\[
+\tan(A+B) = \frac{\frac{3}{4} + \frac{5}{12}}{1 - \frac{3}{4} \cdot \frac{5}{12}}
+\]
+
+First, find $a$ common denominator for the fractions in the numerator, which is 12:
+
+\[
+\tan(A+B) = \frac{\frac{9}{12} + \frac{5}{12}}{1 - \frac{15}{48}}
+\]
+
+Simplify the fractions:
+
+\[
+\tan(A+B) = \frac{\frac{14}{12}}{1 - \frac{5}{16}}
+\]
+
+Simplify further:
+
+\[
+\tan(A+B) = \frac{\frac{7}{6}}{\frac{16}{16} - \frac{5}{16}}
+\]
+
+\[
+\tan(A+B) = \frac{\frac{7}{6}}{\frac{11}{16}}
+\]
+
+To divide by $a$ fraction, multiply by its reciprocal:
+
+\[
+\tan(A+B) = \frac{7}{6} \cdot \frac{16}{11}
+\]
+
+\[
+\tan(A+B) = \frac{7 \cdot 16}{6 \cdot 11}
+\]
+
+\[
+\tan(A+B) = \frac{112}{66}
+\]
+
+Simplify the fraction:
+
+\[
+\tan(A+B) = \frac{56}{33}
+\]
+
+Therefore, $\tan(A+B) = \frac{56}{33}$.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>DE-1</td>
+                <td>Differential Equations</td>
+                <td>Medium</td>
+                <td>Solve the differential equation: dy/dx + y = 2</td>
+                <td>y = Ce^(-x) + 2</td>
+                <td class="correct">True</td>
+                <td>84.0%</td>
+                <td>15.26s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To solve the differential equation $\frac{dy}{dx} + y = 2$, we'll use the method of integrating factors. The equation is $a$ first-order linear differential equation of the form $\frac{dy}{dx} + P(x)y = Q(x)$, where $P(x) = 1$ and $Q(x) = 2$.
+
+### Step 1: Identify the [NAME_REDACTED]
+
+The integrating factor, $\mu(x)$, is given by $e^{\int P(x)dx}$. For our equation, $P(x) = 1$, so we have:
+
+\[
+\mu($x$) = e^{\int 1 dx} = e^x
+\]
+
+### Step 2: [NAME_REDACTED] by the [NAME_REDACTED]
+
+Multiply every term of the differential equation by $\mu(x)$:
+
+\[
+e^x \frac{dy}{dx} + e^x $y$ = 2e^x
+\]
+
+### Step 3: Recognize the [NAME_REDACTED] as $a$ [NAME_REDACTED]
+
+The left side of the equation is now in the form of the derivative of $a$ product of two functions, specifically $y$ and $e^x$. This is because $\frac{d}{dx}(e^x y) = e^x \frac{dy}{dx} + e^x y$. So, we rewrite the equation as:
+
+\[
+\frac{d}{dx}(e^x $y$) = 2e^x
+\]
+
+### Step 4: [NAME_REDACTED] Sides
+
+Integrate both sides with respect to $x$:
+
+\[
+\int \frac{d}{dx}(e^x $y$) dx = \int 2e^x dx
+\]
+
+This simplifies to:
+
+\[
+e^x $y$ = 2e^x + $C$
+\]
+
+where $C$ is the constant of integration.
+
+### Step 5: Solve for $y$
+
+Finally, solve for $y$ by dividing both sides by $e^x$:
+
+\[
+$y$ = 2 + Ce^{-x}
+\]
+
+This is the general solution to the differential equation $\frac{dy}{dx} + y = 2$, where $C$ is an arbitrary constant.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-hard">
+                <td>DE-2</td>
+                <td>Differential Equations</td>
+                <td>Hard</td>
+                <td>Solve the differential equation: d^2y/dx^2 - 4dy/dx + 4y = 0</td>
+                <td>y = (C1 + C2x)e^(2x)</td>
+                <td class="incorrect">False</td>
+                <td>68.0%</td>
+                <td>17.56s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To solve the differential equation $\frac{d^2y}{dx^2} - 4\frac{dy}{dx} + 4y = 0$, we'll use the characteristic equation method. This method involves finding $a$ characteristic equation associated with the given differential equation and solving it to find the general solution of the differential equation.
+
+The given differential equation is $a$ second-order linear homogeneous differential equation with constant coefficients. Its characteristic equation can be found by replacing $\frac{d^2y}{dx^2}$ with $r^2$, $\frac{dy}{dx}$ with $r$, and $y$ with $1$. Doing so, we get:
+
+\[
+r^2 - 4r + 4 = 0
+\]
+
+Now, let's solve this quadratic equation for $r$:
+
+\[
+r^2 - 4r + 4 = 0
+\]
+
+This can be factored or solved using the quadratic formula. The quadratic formula is $r = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$, where $a = 1$, $b = -4$, and $c = 4$. Plugging these values into the formula gives:
+
+\[
+$r$ = \frac{-(-4) \pm \sqrt{(-4)^2 - 4 \cdot 1 \cdot 4}}{2 \cdot 1}
+\]
+
+\[
+$r$ = \frac{4 \pm \sqrt{16 - 16}}{2}
+\]
+
+\[
+$r$ = \frac{4 \pm \sqrt{0}}{2}
+\]
+
+\[
+$r$ = \frac{4}{2}
+\]
+
+\[
+$r$ = 2
+\]
+
+Since we have $a$ repeated root ($r = 2$), the general solution to the differential equation will be of the form:
+
+\[
+y($x$) = ($C_1$ + C_2x)e^{rx}
+\]
+
+Substituting $r = 2$ into this equation gives:
+
+\[
+y($x$) = ($C_1$ + C_2x)e^{2x}
+\]
+
+Where $C_1$ and $C_2$ are constants determined by initial conditions or boundary conditions, if they are provided. Since no initial or boundary conditions are given in this problem, this is the most general form of the solution to the given differential equation.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>VEC-1</td>
+                <td>Vectors</td>
+                <td>Medium</td>
+                <td>If a = 2i + 3j - k and b = i - j + 2k, find a × b.</td>
+                <td>5i + 5j + 5k</td>
+                <td class="incorrect">False</td>
+                <td>52.0%</td>
+                <td>17.45s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the cross product $a \times b$ of two vectors $a$ and $b$, we can use the determinant of $a$ matrix formed by the unit vectors $\mathbf{i}$, $\mathbf{j}$, and $\mathbf{k}$ in the first row, the components of vector $a$ in the second row, and the components of vector $b$ in the third row. Given vectors $a = 2\mathbf{i} + 3\mathbf{j} - \mathbf{k}$ and $b = \mathbf{i} - \mathbf{j} + 2\mathbf{k}$, we can express the cross product as follows:
+
+\[
+$a$ \times $b$ = \begin{vmatrix}
+\mathbf{i} & \mathbf{j} & \mathbf{k} \\
+2 & 3 & -1 \\
+1 & -1 & 2 \\
+\end{vmatrix}
+\]
+
+To compute this determinant, we expand it as follows:
+
+\[
+$a$ \times $b$ = \mathbf{i} \begin{vmatrix}
+3 & -1 \\
+-1 & 2 \\
+\end{vmatrix}
+- \mathbf{j} \begin{vmatrix}
+2 & -1 \\
+1 & 2 \\
+\end{vmatrix}
++ \mathbf{k} \begin{vmatrix}
+2 & 3 \\
+1 & -1 \\
+\end{vmatrix}
+\]
+
+Now, we calculate each of the 2x2 determinants:
+
+\[
+\begin{align*}
+\begin{vmatrix}
+3 & -1 \\ 
+-1 & 2 \\ 
+\end{vmatrix} &=  (3)(2) - (-1)(-1) = 6 - 1 = 5 \\ 
+\begin{vmatrix}
+2 & -1 \\ 
+1 & 2 \\ 
+\end{vmatrix} &=  (2)(2) - (-1)(1) = 4 + 1 = 5 \\ 
+\begin{vmatrix}
+2 & 3 \\ 
+1 & -1 \\ 
+\end{vmatrix} &=  (2)(-1) - (3)(1) = -2 - 3 = -5 \\ 
+
+\end{align*}
+\]
+
+Substituting these values back into our expression for $a \times b$, we get:
+
+\[
+$a$ \times $b$ = 5\mathbf{i} - 5\mathbf{j} - 5\mathbf{k}
+\]
+
+Therefore, the cross product $a \times b$ is $5\mathbf{i} - 5\mathbf{j} - 5\mathbf{k}$.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>VEC-2</td>
+                <td>Vectors</td>
+                <td>Medium</td>
+                <td>Find the angle between the vectors a = i + j + k and b = i + j - k.</td>
+                <td>cos^(-1)(1/3)</td>
+                <td class="incorrect">False</td>
+                <td>20.0%</td>
+                <td>17.20s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the angle between two vectors $\mathbf{a}$ and $\mathbf{b}$, we use the dot product formula, which is given by:
+
+\[
+\mathbf{a} \cdot \mathbf{b} = \|\mathbf{a}\| \|\mathbf{b}\| \cos(\theta)
+\]
+
+where $\theta$ is the angle between the vectors, $\|\mathbf{a}\|$ and $\|\mathbf{b}\|$ are the magnitudes of vectors $\mathbf{a}$ and $\mathbf{b}$ respectively, and $\mathbf{a} \cdot \mathbf{b}$ is the dot product of $\mathbf{a}$ and $\mathbf{b}$.
+
+Given vectors $\mathbf{a} = i + j + k$ and $\mathbf{b} = i + j - k$, we can calculate the dot product, the magnitudes of each vector, and then solve for $\theta$.
+
+### Step 1: Calculate the [NAME_REDACTED]
+
+\[
+\mathbf{a} \cdot \mathbf{b} = (1)(1) + (1)(1) + (1)(-1) = 1 + 1 - 1 = 1
+\]
+
+### Step 2: Calculate the Magnitudes of $\mathbf{a}$ and $\mathbf{b}$
+
+\[
+\|\mathbf{a}\| = \sqrt{(1)^2 + (1)^2 + (1)^2} = \sqrt{3}
+\]
+
+\[
+\|\mathbf{b}\| = \sqrt{(1)^2 + (1)^2 + (-1)^2} = \sqrt{3}
+\]
+
+### Step 3: Solve for $\theta$
+
+Using the dot product formula:
+
+\[
+1 = \sqrt{3} \cdot \sqrt{3} \cdot \cos(\theta) = 3\cos(\theta)
+\]
+
+Solving for $\cos(\theta)$:
+
+\[
+\cos(\theta) = \frac{1}{3}
+\]
+
+Finally, to find $\theta$, we take the inverse cosine:
+
+\[
+\theta = \cos^{-1}\left(\frac{1}{3}\right)
+\]
+
+Therefore, the angle between the vectors $\mathbf{a}$ and $\mathbf{b}$ is $\cos^{-1}\left(\frac{1}{3}\right)$ radians.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>CALC-4</td>
+                <td>Calculus</td>
+                <td>Medium</td>
+                <td>If y = sin(ln(x)), find dy/dx.</td>
+                <td>cos(ln(x))/x</td>
+                <td class="incorrect">False</td>
+                <td>20.0%</td>
+                <td>11.98s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the derivative of $y = \sin(\ln(x))$ with respect to $x$, we'll use the chain rule. The chain rule states that if you have $a$ composite function $f(g(x))$, then its derivative is $f'(g(x)) \cdot g'(x)$. In this case, we have two functions: $f(u) = \sin(u)$, where $u = \ln(x)$, and $g(x) = \ln(x)$.
+
+Let's start by differentiating each part:
+
+1. Differentiate $f(u) = \sin(u)$ with respect to $u$:
+\$f'(u) = \cos(u)\$
+
+2. Differentiate $g(x) = \ln(x)$ with respect to $x$:
+\$g'(x) = \frac{1}{x}\$
+
+Now, apply the chain rule to find $\frac{dy}{dx}$:
+
+\[
+\frac{dy}{dx} = f'(g($x$)) \cdot g'($x$) = \cos(\ln($x$)) \cdot \frac{1}{x}
+\]
+
+Therefore, the derivative of $y = \sin(\ln(x))$ with respect to $x$ is:
+
+\[
+\frac{dy}{dx} = \frac{\cos(\ln($x$))}{x}
+\]</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>CALC-5</td>
+                <td>Calculus</td>
+                <td>Medium</td>
+                <td>Evaluate the definite integral: ∫(0 to π/2) x sin(x) dx</td>
+                <td>1</td>
+                <td class="correct">True</td>
+                <td>100.0%</td>
+                <td>21.20s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To evaluate the definite integral $\int_{0}^{\pi/2} x \sin(x) \, dx$, we'll use integration by parts. Integration by parts is based on the formula:
+
+\[
+\int $u$ \, dv = uv - \int $v$ \, du
+\]
+
+where $u$ and $dv$ are parts of the integrand we choose. For this integral, let's choose:
+
+- $u = x$, which implies $du = dx$.
+- $dv = \sin(x) \, dx$, which implies $v = -\cos(x)$ (since the derivative of $\cos(x)$ is $-\sin(x)$).
+
+Now, applying the integration by parts formula:
+
+\begin{align*}
+\int_{0}^{\pi/2} x \sin(x) \, dx &=  \left. -x \cos(x) \right|_{0}^{\pi/2} - \int_{0}^{\pi/2} -\cos(x) \, dx \\ 
+&=  \left. -x \cos(x) \right|_{0}^{\pi/2} + \int_{0}^{\pi/2} \cos(x) \, dx.
+\end{align*}
+
+Evaluating the first part:
+
+\[
+\left. -x \cos($x$) \right|_{0}^{\pi/2} = -\left(\frac{\pi}{2}\right) \cos\left(\frac{\pi}{2}\right) - \left(0\right) \cos(0) = 0 - 0 = 0.
+\]
+
+Evaluating the second integral:
+
+\[
+\int_{0}^{\pi/2} \cos($x$) \, dx = \left. \sin($x$) \right|_{0}^{\pi/2} = \sin\left(\frac{\pi}{2}\right) - \sin(0) = 1 - 0 = 1.
+\]
+
+Therefore, the value of the definite integral is:
+
+\[
+\int_{0}^{\pi/2} $x$ \sin($x$) \, d$x = 0$ + 1 = 1.
+\]</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-hard">
+                <td>CALC-6</td>
+                <td>Calculus</td>
+                <td>Hard</td>
+                <td>Find the area enclosed by the curve y = |x|, y = x² and x = 1.</td>
+                <td>1/3</td>
+                <td class="incorrect">False</td>
+                <td>20.0%</td>
+                <td>31.53s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the area enclosed by the curves $y = |x|$, $y = x^2$, and $x = 1$, we need to follow these steps:
+
+1. **Identify the points of intersection** between the curves $y = |x|$ and $y = x^2$.
+2. **Set up the integral($s$)** to calculate the area.
+3. **Evaluate the integral($s$)** to find the area.
+
+### Step 1: Points of Intersection
+
+Since $y = |x|$ can be written as $y = x$ for $x \geq 0$ and $y = -x$ for $x < 0$, we'll find the intersections for both cases with $y = x^2$.
+
+#### For $y = x$:
+\begin{align}
+x &=  x^2 \\ 
+x^2 - x &=  0 \\ 
+x(x - 1) &=  0
+\end{align}
+This gives us $x = 0$ and $x = 1$.
+
+#### For $y = -x$:
+\begin{align}
+-x &=  x^2 \\ 
+x^2 + x &=  0 \\ 
+x(x + 1) &=  0
+\end{align}
+This gives us $x = 0$ and $x = -1$.
+
+So, the points of intersection are at $x = -1$, $x = 0$, and $x = 1$.
+
+### Step 2: Set Up the Integral($s$)
+
+To find the area enclosed by the curves, we need to integrate the difference between the curves from $x = -1$ to $x = 1$. Since $y = |x|$ is above $y = x^2$ between $x = -1$ and $x = 1$, we'll subtract $y = x^2$ from $y = |x|$.
+
+However, we need to consider the absolute value function separately for $x < 0$ and $x \geq 0$.
+
+#### For $-1 \leq x < 0$:
+\begin{align}
+\text{Area}_1 &=  \int_{-1}^{0} ((-x) - x^2) \, dx
+\end{align}
+
+#### For $0 \leq x \leq 1$:
+\begin{align}
+\text{Area}_2 &=  \int_{0}^{1} (x - x^2) \, dx
+\end{align}
+
+### Step 3: Evaluate the Integrals
+
+#### For $\text{Area}_1$:
+\begin{align}
+\text{Area}_1 &=  \int_{-1}^{0} (-x - x^2) \, dx \\ 
+&=  \left$\frac{-x^2}{2} - \frac{x^3}{3} \right$_{-1}^{0} \\ 
+&=  \left(0 - 0\right) - \left( \frac{-(-1)^2}{2} - \frac{-1^3}{3} \right) \\ 
+&=  -\left( \frac{-1}{2} - \frac{-1}{3} \right) \\ 
+&=  \frac{1}{2} - \frac{1}{3} \\ 
+&=  \frac{3 - 2}{6} \\ 
+&=  \frac{1}{6}
+\end{align}
+
+#### For $\text{Area}_2$:
+\begin{align}
+\text{Area}_2 &=  \int_{0}^{1} (x - x^2) \, dx \\ 
+&=  \left$\frac{x^2}{2} - \frac{x^3}{3} \right$_{0}^{1} \\ 
+&=  \left( \frac{1^2}{2} - \frac{1^3}{3} \right) - (0 - 0) \\ 
+&=  \frac{1}{2} - \frac{1}{3} \\ 
+&=  \frac{3 - 2}{6} \\ 
+&=  \frac{1}{6}
+\end{align}
+
+### [NAME_REDACTED]
+
+The total area enclosed by the curves is the sum of $\text{Area}_1$ and $\text{Area}_2$:
+\begin{align}
+\text{Total Area} &=  \text{Area}_1 + \text{Area}_2 \\ 
+&=  \frac{1}{6} + \frac{1}{6} \\ 
+&=  \frac{2}{6} \\ 
+&=  \frac{1}{3}
+\end{align}
+
+Therefore, the area enclosed by the curves $y = |x|$, $y = x^2$, and $x = 1$ is $\frac{1}{3}$ square units.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-hard">
+                <td>ALG-4</td>
+                <td>Algebra</td>
+                <td>Hard</td>
+                <td>If a, b, c are in GP and a + b + c = 14, a·b·c = 64, find the value of b.</td>
+                <td>4</td>
+                <td class="correct">True</td>
+                <td>100.0%</td>
+                <td>19.41s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">Given that $a$, $b$, and $c$ are in geometric progression (GP) and $a + b + c = 14$, $abc = 64$, we need to find the value of $b$.
+
+### Step 1: Express $a$, $b$, and $c$ in terms of $b$
+
+Since $a$, $b$, and $c$ are in GP, there exists $a$ common ratio $r$ such that $a = \frac{b}{r}$ and $c = br$. Thus, we can express all terms in terms of $b$ and $r$.
+
+### Step 2: Use the given equations
+
+1. From $a + b + c = 14$, substituting $a = \frac{b}{r}$ and $c = br$, we get:
+\[
+\frac{b}{r} + $b$ + b$r = 14$
+\]
+2. From $abc = 64$, substituting $a = \frac{b}{r}$ and $c = br$, we get:
+\[
+\left(\frac{b}{r}\right) \cdot $b$ \cdot (br) = 64
+\]
+Simplifying this gives:
+\[
+b^3 = 64
+\]
+
+### Step 3: Solve for $b$
+
+From $b^3 = 64$, we find $b$ by taking the cube root of both sides:
+\[
+$b$ = \sqrt[3]{64} = 4
+\]
+
+### Step 4: Verify the solution
+
+With $b = 4$, we can check if the conditions are satisfied without explicitly finding $a$ and $c$ since the primary goal is to find $b$. However, to ensure our understanding is complete, let's briefly see how $a$ and $c$ relate to $b$ in this scenario:
+
+1. We know $b^3 = 64$, which gave us $b = 4$.
+2. We have $a + b + c = 14$, and with $b = 4$, we need $a + c = 10$.
+3. Since $a$, $b$, and $c$ are in GP, and we found $b$, we could further explore the values of $a$ and $c$ if needed by using the GP property and the equations provided. However, since the question only asks for $b$, and we've verified $b = 4$ satisfies the cubic equation derived from the product of the terms, we've found the required value of $b$.
+
+Thus, the value of $b$ is $4$.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>ALG-5</td>
+                <td>Algebra</td>
+                <td>Medium</td>
+                <td>Solve the system of equations: log(x) + log(y) = 1, log(x·y) = 4</td>
+                <td>x = 10, y = 1 or x = 1, y = 10</td>
+                <td class="correct">True</td>
+                <td>81.5%</td>
+                <td>11.30s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To solve the system of equations involving logarithms, we have:
+
+1. $\log(x) + \log(y) = 1$
+2. $\log(x \cdot y) = 4$
+
+Let's solve this step by step.
+
+### Step 1: Simplify the Equations
+
+The first equation can be simplified using the logarithm property $\log(a) + \log(b) = \log(a \cdot b)$. So, equation 1 becomes:
+
+\[
+\log($x$ \cdot $y$) = 1
+\]
+
+We now have two equations:
+
+\[
+\log($x$ \cdot $y$) = 1 \quad \text{(Equation $A$)}
+\]
+\[
+\log($x$ \cdot $y$) = 4 \quad \text{(Equation $B$)}
+\]
+
+### Step 2: Analyze the Equations
+
+Upon inspection, we see that there's $a$ contradiction. Equation $A$ and Equation $B$ cannot both be true for the same values of $x$ and $y$ because they imply that $\log(x \cdot y)$ equals two different numbers (1 and 4) at the same time, which is impossible.
+
+### Conclusion
+
+The system of equations as given is inconsistent and cannot be solved for $x$ and $y$ because it implies $a$ contradiction in the properties of logarithms. There might have been $a$ mistake in the formulation of the problem or in the interpretation of the equations.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>TRIG-3</td>
+                <td>Trigonometry</td>
+                <td>Medium</td>
+                <td>If sin θ + sin² θ = 1, find the value of cos⁴ θ - cos² θ.</td>
+                <td>0</td>
+                <td class="correct">True</td>
+                <td>100.0%</td>
+                <td>49.58s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the value of $\cos^4 \theta - \cos^2 \theta$ given that $\sin \theta + \sin^2 \theta = 1$, we'll start by manipulating the given equation and then use trigonometric identities to express everything in terms of $\cos \theta$.
+
+### Step 1: Use the [NAME_REDACTED]
+
+Given:
+\[
+\sin \theta + \sin^2 \thet$a = 1$
+\]
+
+### Step 2: Use the [NAME_REDACTED]
+
+We know that $\sin^2 \theta + \cos^2 \theta = 1$. Let's rearrange the given equation to make use of this identity.
+
+Subtract $\sin^2 \theta$ from both sides of the given equation:
+\[
+\sin \thet$a = 1$ - \sin^2 \theta
+\]
+
+Now, using the Pythagorean identity, we replace $1$ with $\sin^2 \theta + \cos^2 \theta$:
+\[
+\sin \theta = \sin^2 \theta + \cos^2 \theta - \sin^2 \theta
+\]
+
+Simplifying gives us:
+\[
+\sin \theta = \cos^2 \theta
+\]
+
+### Step 3: Express in Terms of $\cos \theta$
+
+We now have $\sin \theta = \cos^2 \theta$. But we need to find an expression in terms of $\cos \theta$ that matches the target expression $\cos^4 \theta - \cos^2 \theta$.
+
+### Step 4: Find $\cos^4 \theta - \cos^2 \theta$
+
+Given that $\sin \theta = \cos^2 \theta$, we want to express $\cos^4 \theta - \cos^2 \theta$ in terms that can be directly derived from our given information.
+
+However, we notice that we might not need to directly use $\sin \theta = \cos^2 \theta$ to find $\cos^4 \theta - \cos^2 \theta$. Instead, we can use $a$ different approach by recognizing that we are asked for $a$ specific form that might simplify using identities or algebraic manipulation.
+
+### [NAME_REDACTED] to $\cos^4 \theta - \cos^2 \theta$
+
+Given the complexity of directly substituting and manipulating $\sin \theta = \cos^2 \theta$ to find $\cos^4 \theta - \cos^2 \theta$, let's consider $a$ more straightforward approach using trigonometric identities or algebraic manipulation.
+
+However, upon reevaluation, we realize that the direct manipulation from $\sin \theta = \cos^2 \theta$ might not be the most straightforward path to $\cos^4 \theta - \cos^2 \theta$ without an additional step or identity that directly relates these terms.
+
+### Correcting the Approach
+
+Given the initial setup, we actually made an oversight in directly linking the given to the target expression without considering the simplification or manipulation that directly leads to $\cos^4 \theta - \cos^2 \theta$.
+
+To correct the course and provide $a$ clear solution:
+
+1. **Revisit the [NAME_REDACTED]**: We start with $\sin^2 \theta + \cos^2 \theta = 1$.
+
+2. **[NAME_REDACTED]**: From $\sin \theta + \sin^2 \theta = 1$, we can directly use this to express in terms of $\cos \theta$ by recognizing that $\sin^2 \theta = 1 - \cos^2 \theta$.
+
+3. **Solve for $\cos^2 \theta$**: The direct manipulation to find $\cos^4 \theta - \cos^2 \theta$ from the given seems to have been misguided without $a$ clear intermediate step that links $\sin \theta = \cos^2 \theta$ to the desired expression.
+
+### Conclusion
+
+Given the initial steps, the direct path to solving for $\cos^4 \theta - \cos^2 \theta$ was not clearly outlined. The correct approach should involve manipulating the given equation to express everything in terms of $\cos \theta$ and then finding $a$ way to relate it to $\cos^4 \theta - \cos^2 \theta$. However, the explanation provided did not accurately follow through with this plan.
+
+To directly address the solution from the given point, let's correct the approach:
+
+Given $\sin \theta + \sin^2 \theta = 1$, we can rewrite it as:
+\[
+\sin^2 \theta + \sin \theta - 1 = 0
+\]
+
+This equation is correct as stated, but the direct link to $\cos^4 \theta - \cos^2 \theta$ was not properly established in the explanation. The correct path involves recognizing that without $a$ direct substitution or further manipulation, the solution path was not accurately completed.
+
+To find $\cos^4 \theta - \cos^2 \theta$ directly from the given information requires recognizing the relationship between $\sin \theta$ and $\cos \theta$ through trigonometric identities, and then applying algebraic manipulation to express the desired form. However, the explanation provided did not accurately complete this process. 
+
+Let's correct the oversight and directly solve for $\cos^4 \theta - \cos^2 \theta$:
+
+Given $\sin^2 \theta = 1 - \cos^2 \theta$, and knowing $\sin \theta = \cos^2 \theta$, we substitute $\sin^2 \theta$ in the Pythagorean identity:
+
+\[
+\sin^2 \thet$a = 1$ - \cos^2 \theta
+\]
+
+But to directly find $\cos^4 \theta - \cos^2 \theta$, we note that without $a$ clear intermediate step provided in the initial explanation, the solution path was not correctly outlined.
+
+### [NAME_REDACTED] Path
+
+To correctly solve for $\cos^4 \theta - \cos^2 \theta$ given the initial conditions, we need to recognize the algebraic or trigonometric manipulation that directly leads to this expression. However, the initial steps provided did not accurately achieve this goal, and without further correct manipulation or application of identities, the solution remains incomplete.
+
+For the correct solution, we should start by recognizing the relationship between $\sin \theta$ and $\cos \theta$, and then correctly apply trigonometric identities and algebraic manipulation to solve for $\cos^4 \theta - \cos^2 \theta$. However, the explanation provided earlier missed detailing this correct path.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-hard">
+                <td>TRIG-4</td>
+                <td>Trigonometry</td>
+                <td>Hard</td>
+                <td>Prove that: (1+tan²A)(1+tan²B)(1+tan²C) = (tan A + tan B + tan C - tan A·tan B·tan C)² where A + B + C = π</td>
+                <td>Proof using the relation tan(A+B+C) = tan(π) = 0</td>
+                <td class="correct">True</td>
+                <td>82.2%</td>
+                <td>28.23s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To prove the given identity, we'll start by using the trigonometric identity $\tan^2 \theta + 1 = \sec^2 \theta$ and the fact that $A + B + C = \pi$. We'll then proceed to manipulate the expressions to show they are equivalent.
+
+### Step 1: Use the identity $\tan^2 \theta + 1 = \sec^2 \theta$
+
+Given $(1 + \tan^2 A)(1 + \tan^2 B)(1 + \tan^2 C)$, we can substitute $\tan^2 \theta + 1$ with $\sec^2 \theta$:
+
+\[
+(1 + \tan^2 $A$)(1 + \tan^2 $B$)(1 + \tan^2 $C$) = (\sec^2 $A$)(\sec^2 $B$)(\sec^2 $C$)
+\]
+
+### Step 2: Use the identity $\sec^2 \theta = 1/\cos^2 \theta$
+
+Since $\sec \theta = 1/\cos \theta$, we have:
+
+\[
+(\sec^2 $A$)(\sec^2 $B$)(\sec^2 $C$) = \frac{1}{\cos^2 A} \cdot \frac{1}{\cos^2 B} \cdot \frac{1}{\cos^2 C}
+\]
+
+### Step 3: Use the sum of angles identity
+
+Given $A + B + C = \pi$, we know that $\cos(\pi - C) = -\cos C$. However, for the purpose of this proof, we focus on the relationship between the angles and use the fact that $\sin^2 \theta + \cos^2 \theta = 1$ to manipulate the expressions further if needed.
+
+### Step 4: Relate to the tangent addition formula
+
+The tangent of $a$ sum of angles is given by:
+
+\[
+\tan($A$ + $B$) = \frac{\tan $A$ + \tan B}{1 - \tan $A$ \tan B}
+\]
+
+Since $A + B + C = \pi$, and $\tan(\pi + \theta) = \tan \theta$, we can express $\tan C$ in terms of $\tan A$ and $\tan B$ using the angle sum identity for tangent. However, the direct approach to proving the original statement involves recognizing the pattern in the given identity rather than directly applying the tangent sum formula.
+
+### Step 5: Manipulate the original expression
+
+The original identity to prove is:
+
+\[
+(1 + \tan^2 $A$)(1 + \tan^2 $B$)(1 + \tan^2 $C$) = (\tan $A$ + \tan $B$ + \tan $C$ - \tan $A$ \cdot \tan $B$ \cdot \tan $C$)^2
+\]
+
+Given the complexity of directly proving this from the trigonometric identities mentioned, we recognize that $a$ direct algebraic manipulation might not be straightforward without considering the trigonometric identities in the context of the sum and product of tangents.
+
+### [NAME_REDACTED]: Use the identity in the context of $\tan(A + B + C) = \tan \pi$
+
+Given $A + B + C = \pi$, we know $\tan(A + B + C) = \tan \pi = 0$. Using the tangent sum formula:
+
+\[
+\tan($A$ + $B$ + $C$) = \frac{\tan $A$ + \tan $B$ + \tan $C$ - \tan $A$ \tan $B$ \tan C}{1 - (\tan $A$ \tan $B$ + \tan $B$ \tan $C$ + \tan $C$ \tan $A$)} = 0
+\]
+
+This implies:
+
+\[
+\tan $A$ + \tan $B$ + \tan $C$ = \tan $A$ \tan $B$ \tan $C$
+\]
+
+However, this approach does not directly lead to the manipulation required to prove the original statement as given. The mistake here lies in the direct application of trigonometric identities without considering the specific form of the given identity.
+
+### Conclusion
+
+The direct proof of the given identity as stated requires $a$ more nuanced approach that involves recognizing the relationship between the angles and the trigonometric identities in $a$ way that directly leads to the form given in the problem statement. The steps provided aimed to lay down foundational trigonometric identities and approaches, but $a$ key insight or step specific to directly proving the given identity was not correctly identified. The correct approach involves leveraging the sum of angles in $a$ way that directly relates to the form of the given equation, possibly through $a$ more intricate use of trigonometric identities that was not fully explored here.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-easy">
+                <td>PROB-1</td>
+                <td>Probability</td>
+                <td>Easy</td>
+                <td>A fair coin is tossed 6 times. What is the probability of getting exactly 4 heads?</td>
+                <td>15/64</td>
+                <td class="incorrect">False</td>
+                <td>20.0%</td>
+                <td>23.45s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the probability of getting exactly 4 heads in 6 tosses of $a$ fair coin, we can use the binomial probability formula. The binomial probability formula is given by:
+
+\[
+P($X$ = $k$) = \binom{n}{k} p^k (1-p)^{n-k}
+\]
+
+where
+- $P(X = k)$ is the probability of getting exactly $k$ successes (in this case, heads) in $n$ trials (coin tosses),
+- $\binom{n}{k}$ is the binomial coefficient, which calculates the number of ways to choose $k$ successes out of $n$ trials,
+- $p$ is the probability of success on $a$ single trial (for $a$ fair coin, $p = 0.5$ for getting $a$ head),
+- $n$ is the total number of trials (coin tosses),
+- $k$ is the number of successes (heads) we're interested in.
+
+For this problem:
+- $n = 6$ (since the coin is tossed 6 times),
+- $k = 4$ (since we're interested in getting exactly 4 heads),
+- $p = 0.5$ (since it's $a$ fair coin, the probability of getting $a$ head on any single toss is 0.5).
+
+Let's calculate it step by step:
+
+1. Calculate the binomial coefficient $\binom{n}{k}$, which is $\binom{6}{4}$:
+
+\[
+\binom{6}{4} = \frac{6!}{4!(6-4)!} = \frac{6 \times 5}{2 \times 1} = 15
+\]
+
+2. Calculate $p^k = (0.5)^4$:
+
+\[
+(0.5)^4 = 0.0625
+\]
+
+3. Calculate $(1-p)^{n-k} = (0.5)^{6-4}$:
+
+\[
+(0.5)^{2} = 0.25
+\]
+
+4. Put it all together:
+
+\[
+P($X$ = 4) = \binom{6}{4} \times (0.5)^4 \times (0.5)^{2} = 15 \times 0.0625 \times 0.25
+\]
+
+\[
+P($X$ = 4) = 15 \times 0.0625 \times 0.25 = 0.234375
+\]
+
+Therefore, the probability of getting exactly 4 heads in 6 tosses of $a$ fair coin is $0.234375$ or $23.4375\%$.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>PROB-2</td>
+                <td>Probability</td>
+                <td>Medium</td>
+                <td>Three dice are rolled. What is the probability that the sum of the numbers is 10?</td>
+                <td>1/8</td>
+                <td class="incorrect">False</td>
+                <td>20.0%</td>
+                <td>22.01s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the probability that the sum of the numbers on three rolled dice is 10, we can follow these steps:
+
+1. **Understand the Problem**: We are dealing with three six-sided dice, each having faces numbered from 1 to 6. We need to find the number of ways the sum of the numbers showing on these dice can be 10, and then calculate the probability of this event.
+
+2. **[NAME_REDACTED]**: Since each die has 6 faces, and there are three dice, the total number of outcomes when rolling the three dice is $6^3 = 216$.
+
+3. **[NAME_REDACTED]**: We need to count the number of ways we can get $a$ sum of 10. We can do this by systematically listing combinations of three numbers that add up to 10.
+
+Let's denote each die roll as $(a, b, c)$ where $a$, $b$, and $c$ are the numbers on the first, second, and third die, respectively.
+
+Here are the combinations:
+
+- $(1, 3, 6)$, $(1, 6, 3)$, $(3, 1, 6)$, $(3, 6, 1)$, $(6, 1, 3)$, $(6, 3, 1)$
+- $(1, 4, 5)$, $(1, 5, 4)$, $(4, 1, 5)$, $(4, 5, 1)$, $(5, 1, 4)$, $(5, 4, 1)$
+- $(2, 2, 6)$, $(2, 6, 2)$, $(6, 2, 2)$
+- $(2, 3, 5)$, $(2, 5, 3)$, $(3, 2, 5)$, $(3, 5, 2)$, $(5, 2, 3)$, $(5, 3, 2)$
+- $(2, 4, 4)$, $(4, 2, 4)$, $(4, 4, 2)$
+- $(3, 3, 4)$, $(3, 4, 3)$, $(4, 3, 3)$
+
+Counting these combinations, we find there are 27 favorable outcomes.
+
+4. **[NAME_REDACTED]**: The probability of an event is given by the ratio of the number of favorable outcomes to the total number of outcomes. Therefore, the probability $P$ of the sum being 10 is:
+
+\[
+$P$ = \frac{\text{Number of favorable outcomes}}{\text{Total number of outcomes}} = \frac{27}{216}
+\]
+
+5. **Simplify the Probability**: Simplifying the fraction gives us:
+
+\[
+$P$ = \frac{27}{216} = \frac{1}{8}
+\]
+
+Therefore, the probability that the sum of the numbers on three rolled dice is 10 is $\frac{1}{8}$.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>COMPLEX-1</td>
+                <td>Complex Numbers</td>
+                <td>Medium</td>
+                <td>If z = 1+i, find the value of z^6.</td>
+                <td>8i</td>
+                <td class="correct">True</td>
+                <td>100.0%</td>
+                <td>21.20s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the value of $z^6$ when $z = 1 + i$, we can follow these steps:
+
+### Step 1: Express $z$ in [NAME_REDACTED]
+
+First, we express $z = 1 + i$ in polar form. The polar form of $a$ complex number is given by $z = r(\cos \theta + i\sin \theta)$, where $r$ is the magnitude of $z$ and $\theta$ is the argument of $z$.
+
+The magnitude $r$ is calculated as:
+\[
+$r$ = \sqrt{a^2 + b^2}
+\]
+where $a = 1$ and $b = 1$ for $z = 1 + i$. Thus,
+\[
+$r$ = \sqrt{1^2 + 1^2} = \sqrt{2}
+\]
+
+The argument $\theta$ is found by $\tan^{-1}\left(\frac{b}{a}\right)$, so
+\[
+\theta = \tan^{-1}\left(\frac{1}{1}\right) = \frac{\pi}{4}
+\]
+
+Therefore, $z$ in polar form is:
+\[
+$z$ = \sqrt{2}\left(\cos\frac{\pi}{4} + i\sin\frac{\pi}{4}\right)
+\]
+
+### Step 2: Apply De Moivre's Theorem
+
+De Moivre's Theorem states that for any complex number $z = r(\cos \theta + i\sin \theta)$ and any integer $n$, we have:
+\[
+z^n = r^n(\cos(n\theta) + i\sin(n\theta))
+\]
+
+Applying this to $z^6$, we get:
+\[
+z^6 = (\sqrt{2})^6\left(\cos\left(6\cdot\frac{\pi}{4}\right) + i\sin\left(6\cdot\frac{\pi}{4}\right)\right)
+\]
+
+### Step 3: Calculate $z^6$
+
+Now, calculate the magnitude and angle for $z^6$:
+\[
+r^6 = (\sqrt{2})^6 = 2^3 = 8
+\]
+\[
+6\cdot\frac{\pi}{4} = \frac{3\pi}{2}
+\]
+
+Thus,
+\[
+z^6 = 8\left(\cos\frac{3\pi}{2} + i\sin\frac{3\pi}{2}\right)
+\]
+
+Since $\cos\frac{3\pi}{2} = 0$ and $\sin\frac{3\pi}{2} = -1$, we have:
+\[
+z^6 = 8(0 - $i$) = -8i
+\]
+
+Therefore, the value of $z^6$ when $z = 1 + i$ is $-8i$.</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>COMPLEX-2</td>
+                <td>Complex Numbers</td>
+                <td>Medium</td>
+                <td>Find all the values of z satisfying z^4 + 16 = 0.</td>
+                <td>z = ±2i, ±2i</td>
+                <td class="incorrect">False</td>
+                <td>60.0%</td>
+                <td>33.20s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find all the values of $z$ satisfying the equation $z^4 + 16 = 0$, we'll follow these steps:
+
+### Step 1: Rearrange the Equation
+First, we want to isolate $z^4$ on one side of the equation. So, we have:
+\[
+z^4 = -16
+\]
+
+### Step 2: Take the [NAME_REDACTED]
+To solve for $z$, we need to take the fourth root of both sides. However, since we're dealing with complex numbers (given the negative sign under the fourth root), we'll express $-16$ in its complex form. Recall that $-16$ can be written as $16(\cos \pi + i\sin \pi)$ because $-16$ is on the negative real axis in the complex plane, where $\cos \pi = -1$ and $\sin \pi = 0$. Thus, $-16 = 16e^{i\pi}$.
+
+The fourth roots of $-16$ are then given by:
+\[
+$z$ = \sqrt[4]{16e^{i\pi}} = \sqrt[4]{16}e^{i\left(\frac{\pi + 2\pi k}{4}\right)}, \quad $k$ = 0, 1, 2, 3
+\]
+This is because when taking the $n$th root of $a$ complex number in polar form, $re^{i\theta}$, the roots are given by $r^{1/n}e^{i(\theta+2\pi k)/n}$ for $k = 0, 1, ..., n-1$.
+
+### Step 3: Calculate the Roots
+Given that $\sqrt$4${16} = 2$, we have:
+\[
+$z$ = 2e^{i\left(\frac{\pi + 2\pi k}{4}\right)}, \quad $k$ = 0, 1, 2, 3
+\]
+
+For $k = 0$:
+\[
+$z$ = 2e^{i\left(\frac{\pi}{4}\right)} = 2\left(\cos\left(\frac{\pi}{4}\right) + i\sin\left(\frac{\pi}{4}\right)\right) = 2\left(\frac{\sqrt{2}}{2} + i\frac{\sqrt{2}}{2}\right) = \sqrt{2} + i\sqrt{2}
+\]
+
+For $k = 1$:
+\[
+$z$ = 2e^{i\left(\frac{3\pi}{4}\right)} = 2\left(\cos\left(\frac{3\pi}{4}\right) + i\sin\left(\frac{3\pi}{4}\right)\right) = 2\left(-\frac{\sqrt{2}}{2} + i\frac{\sqrt{2}}{2}\right) = -\sqrt{2} + i\sqrt{2}
+\]
+
+For $k = 2$:
+\[
+$z$ = 2e^{i\left(\frac{5\pi}{4}\right)} = 2\left(\cos\left(\frac{5\pi}{4}\right) + i\sin\left(\frac{5\pi}{4}\right)\right) = 2\left(-\frac{\sqrt{2}}{2} - i\frac{\sqrt{2}}{2}\right) = -\sqrt{2} - i\sqrt{2}
+\]
+
+For $k = 3$:
+\[
+$z$ = 2e^{i\left(\frac{7\pi}{4}\right)} = 2\left(\cos\left(\frac{7\pi}{4}\right) + i\sin\left(\frac{7\pi}{4}\right)\right) = 2\left(\frac{\sqrt{2}}{2} - i\frac{\sqrt{2}}{2}\right) = \sqrt{2} - i\sqrt{2}
+\]
+
+### Conclusion
+The values of $z$ satisfying $z^4 + 16 = 0$ are:
+\[
+$z$ = \sqrt{2} + i\sqrt{2}, \quad -\sqrt{2} + i\sqrt{2}, \quad -\sqrt{2} - i\sqrt{2}, \quad \sqrt{2} - i\sqrt{2}
+\]</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-medium">
+                <td>3DGEOM-1</td>
+                <td>3D Geometry</td>
+                <td>Medium</td>
+                <td>Find the equation of the plane passing through the point (1, 2, 3) and perpendicular to the vector 2i - j + 2k.</td>
+                <td>2x - y + 2z = 9</td>
+                <td class="correct">True</td>
+                <td>88.6%</td>
+                <td>11.55s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the equation of $a$ plane passing through $a$ given point $(x_0, y_0, z_0)$ and perpendicular to $a$ given vector $\mathbf{n} = ai + bj + ck$, we use the general equation of $a$ plane in vector form:
+
+\[
+a($x$ - $x_0$) + b($y$ - $y_0$) + c($z$ - $z_0$) = 0
+\]
+
+Given the point $(1, 2, 3)$ and the normal vector $\mathbf{n} = 2\mathbf{i} - \mathbf{j} + 2\mathbf{k}$, we have $a = 2$, $b = -1$, $c = 2$, and $(x_0, y_0, z_0) = (1, 2, 3)$. Plugging these values into the equation gives:
+
+\[
+2($x$ - 1) - 1($y$ - 2) + 2($z$ - 3) = 0
+\]
+
+Expanding this equation:
+
+\begin{align*}
+2x - 2 - y + 2 + 2z - 6 &=  0 \\ 
+2x - y + 2z - 6 &=  0
+\end{align*}
+
+Therefore, the equation of the plane is:
+
+\[
+2x - $y$ + 2z - 6 = 0
+\]</div>
+                    </details>
+                </td>
+            </tr>
+        
+            <tr class="difficulty-hard">
+                <td>3DGEOM-2</td>
+                <td>3D Geometry</td>
+                <td>Hard</td>
+                <td>Find the shortest distance between the lines r = (1,2,3) + t(2,1,1) and r = (3,1,2) + s(1,2,3).</td>
+                <td>√6/7</td>
+                <td class="incorrect">False</td>
+                <td>20.0%</td>
+                <td>33.79s</td>
+                <td>
+                    <details>
+                        <summary>View Response</summary>
+                        <div class="response">To find the shortest distance between two lines in 3D space, we can use $a$ formula derived from vector operations. The lines are given in parametric form as:
+
+Line 1: $\mathbf{r}_1 = (1,2,3) + t(2,1,1)$
+
+Line 2: $\mathbf{r}_2 = (3,1,2) + s(1,2,3)$
+
+First, let's identify the direction vectors and points on each line. [NAME_REDACTED] 1, the direction vector is $\mathbf{d}_1 = (2,1,1)$ and $a$ point on the line is $\mathbf{a} = (1,2,3)$. [NAME_REDACTED] 2, the direction vector is $\mathbf{d}_2 = (1,2,3)$ and $a$ point on the line is $\mathbf{b} = (3,1,2)$.
+
+The formula for the shortest distance $D$ between two skew lines (lines that do not intersect and are not parallel) is given by:
+
+\[
+$D$ = \frac{\left| (\mathbf{b} - \mathbf{a}) \cdot (\mathbf{d}_1 \times \mathbf{d}_2) \right|}{\|\mathbf{d}_1 \times \mathbf{d}_2\|}
+\]
+
+where $\times$ denotes the cross product and $\cdot$ denotes the dot product.
+
+### Step 1: Calculate $\mathbf{b} - \mathbf{a}$
+
+\[
+\mathbf{b} - \mathbf{a} = (3,1,2) - (1,2,3) = (2,-1,-1)
+\]
+
+### Step 2: Calculate $\mathbf{d}_1 \times \mathbf{d}_2$
+
+The cross product of $\mathbf{d}_1 = (2,1,1)$ and $\mathbf{d}_2 = (1,2,3)$ is:
+
+\[
+\mathbf{d}_1 \times \mathbf{d}_2 = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ 2 & 1 & 1 \\ 1 & 2 & 3 \end{vmatrix} = \mathbf{i}(1\cdot3 - 1\cdot2) - \mathbf{j}(2\cdot3 - 1\cdot1) + \mathbf{k}(2\cdot2 - 1\cdot1)
+\]
+
+\[
+= \mathbf{i}(3 - 2) - \mathbf{j}(6 - 1) + \mathbf{k}(4 - 1) = \mathbf{i} - 5\mathbf{j} + 3\mathbf{k} = (1, -5, 3)
+\]
+
+### Step 3: Calculate the dot product $(\mathbf{b} - \mathbf{a}) \cdot (\mathbf{d}_1 \times \mathbf{d}_2)$
+
+\[
+(2,-1,-1) \cdot (1, -5, 3) = 2\cdot1 + (-1)\cdot(-5) + (-1)\cdot3 = 2 + 5 - 3 = 4
+\]
+
+### Step 4: Calculate the magnitude of $\mathbf{d}_1 \times \mathbf{d}_2$
+
+\[
+\|\mathbf{d}_1 \times \mathbf{d}_2\| = \sqrt{1^2 + (-5)^2 + 3^2} = \sqrt{1 + 25 + 9} = \sqrt{35}
+\]
+
+### Step 5: Calculate the shortest distance $D$
+
+\[
+$D$ = \frac{\left| 4 \right|}{\sqrt{35}} = \frac{4}{\sqrt{35}}
+\]
+
+To make it more readable, we can rationalize the denominator:
+
+\[
+$D$ = \frac{4\sqrt{35}}{35}
+\]
+
+Therefore, the shortest distance between the two lines is $\frac{4\sqrt{35}}{35}$ units.</div>
+                    </details>
+                </td>
+            </tr>
+        
+        </table>
+        
+        <h2>Conclusion</h2>
+        <p>This report shows the performance of the Math Agent on JEE-level problems across different topics and difficulty levels. 
+        The results can be used to identify areas of strength and weakness in the agent's capabilities.</p>
+        
+        <footer>
+            <p>Math Agent JEE Benchmark - © 2024</p>
+        </footer>
+    </body>
+    </html>
+    

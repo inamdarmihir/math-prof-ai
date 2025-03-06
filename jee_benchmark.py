@@ -160,6 +160,124 @@ JEE_PROBLEMS = [
         "subtopic": "Dot Product",
         "difficulty": "Medium"
     },
+    
+    # Additional JEE Problems
+    
+    # More Calculus
+    {
+        "id": "CALC-4",
+        "question": "If y = sin(ln(x)), find dy/dx.",
+        "expected_answer": "cos(ln(x))/x",
+        "topic": "Calculus",
+        "subtopic": "Differentiation",
+        "difficulty": "Medium"
+    },
+    {
+        "id": "CALC-5",
+        "question": "Evaluate the definite integral: ∫(0 to π/2) x sin(x) dx",
+        "expected_answer": "1",
+        "topic": "Calculus",
+        "subtopic": "Definite Integration",
+        "difficulty": "Medium"
+    },
+    {
+        "id": "CALC-6",
+        "question": "Find the area enclosed by the curve y = |x|, y = x² and x = 1.",
+        "expected_answer": "1/3",
+        "topic": "Calculus",
+        "subtopic": "Integration Applications",
+        "difficulty": "Hard"
+    },
+    
+    # More Algebra
+    {
+        "id": "ALG-4",
+        "question": "If a, b, c are in GP and a + b + c = 14, a·b·c = 64, find the value of b.",
+        "expected_answer": "4",
+        "topic": "Algebra",
+        "subtopic": "Geometric Progression",
+        "difficulty": "Hard"
+    },
+    {
+        "id": "ALG-5",
+        "question": "Solve the system of equations: log(x) + log(y) = 1, log(x·y) = 4",
+        "expected_answer": "x = 10, y = 1 or x = 1, y = 10",
+        "topic": "Algebra",
+        "subtopic": "Logarithmic Equations",
+        "difficulty": "Medium"
+    },
+    
+    # More Trigonometry
+    {
+        "id": "TRIG-3",
+        "question": "If sin θ + sin² θ = 1, find the value of cos⁴ θ - cos² θ.",
+        "expected_answer": "0",
+        "topic": "Trigonometry",
+        "subtopic": "Trigonometric Equations",
+        "difficulty": "Medium"
+    },
+    {
+        "id": "TRIG-4",
+        "question": "Prove that: (1+tan²A)(1+tan²B)(1+tan²C) = (tan A + tan B + tan C - tan A·tan B·tan C)² where A + B + C = π",
+        "expected_answer": "Proof using the relation tan(A+B+C) = tan(π) = 0",
+        "topic": "Trigonometry",
+        "subtopic": "Advanced Identities",
+        "difficulty": "Hard"
+    },
+    
+    # Probability and Statistics
+    {
+        "id": "PROB-1",
+        "question": "A fair coin is tossed 6 times. What is the probability of getting exactly 4 heads?",
+        "expected_answer": "15/64",
+        "topic": "Probability",
+        "subtopic": "Binomial Distribution",
+        "difficulty": "Easy"
+    },
+    {
+        "id": "PROB-2",
+        "question": "Three dice are rolled. What is the probability that the sum of the numbers is 10?",
+        "expected_answer": "1/8",
+        "topic": "Probability",
+        "subtopic": "Dice Problems",
+        "difficulty": "Medium"
+    },
+    
+    # Complex Numbers
+    {
+        "id": "COMPLEX-1",
+        "question": "If z = 1+i, find the value of z^6.",
+        "expected_answer": "8i",
+        "topic": "Complex Numbers",
+        "subtopic": "Powers of Complex Numbers",
+        "difficulty": "Medium"
+    },
+    {
+        "id": "COMPLEX-2",
+        "question": "Find all the values of z satisfying z^4 + 16 = 0.",
+        "expected_answer": "z = ±2i, ±2i",
+        "topic": "Complex Numbers",
+        "subtopic": "Complex Roots",
+        "difficulty": "Medium"
+    },
+    
+    # 3D Geometry
+    {
+        "id": "3DGEOM-1",
+        "question": "Find the equation of the plane passing through the point (1, 2, 3) and perpendicular to the vector 2i - j + 2k.",
+        "expected_answer": "2x - y + 2z = 9",
+        "topic": "3D Geometry",
+        "subtopic": "Planes",
+        "difficulty": "Medium"
+    },
+    {
+        "id": "3DGEOM-2",
+        "question": "Find the shortest distance between the lines r = (1,2,3) + t(2,1,1) and r = (3,1,2) + s(1,2,3).",
+        "expected_answer": "√6/7",
+        "topic": "3D Geometry",
+        "subtopic": "Lines in 3D",
+        "difficulty": "Hard"
+    }
 ]
 
 def evaluate_response(problem, response):
