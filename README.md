@@ -1,5 +1,3 @@
-Here's a technically detailed and exhaustive README for your GitHub project:
-
 ---
 
 # Math Prof AI
