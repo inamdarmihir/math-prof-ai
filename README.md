@@ -1,10 +1,10 @@
 # Math Agent
 
-> 🚀 **An advanced AI-powered solution** for solving mathematical problems with step-by-step reasoning, supporting a wide range of mathematical domains from basic algebra to advanced calculus.
+🚀 **An advanced AI-powered solution** for solving mathematical problems with step-by-step reasoning, supporting a wide range of mathematical domains from basic algebra to advanced calculus.
 
 ---
 
-📄 **Documentation** | 🖥️ **Streamlit Version** | 🛠️ **Installation Guide** | 📊 **Benchmarking**
+📄 **[Documentation](#)** | 🖥️ **[Streamlit Version](#)** | 🛠️ **[Installation Guide](#getting-started)** | 📊 **[Benchmarking](#benchmarking-system)**
 
 ---
 
@@ -167,4 +167,3 @@ This project is licensed under the terms of the included LICENSE file.
 - Streamlit for the web interface framework.
 - Qdrant for vector database capabilities.
 - JEE examination board for inspiring the benchmark problems.
-
