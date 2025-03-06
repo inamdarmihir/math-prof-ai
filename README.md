@@ -1,4 +1,8 @@
-# Math Agent
+Here's a technically detailed and exhaustive README for your GitHub project:
+
+---
+
+# Math Prof AI
 
 🚀 **An advanced AI-powered solution** for solving mathematical problems with step-by-step reasoning, supporting a wide range of mathematical domains from basic algebra to advanced calculus.
 
@@ -12,7 +16,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                             Math Agent                                   │
+│                             Math Prof AI                                 │
 └───────────────────────────────────┬─────────────────────────────────────┘
                                     │
            ┌─────────────────────────────────────────────┐
@@ -63,8 +67,8 @@
 
 1. Clone this repository:
     ```bash
-    git clone https://github.com/yourusername/math-agent.git
-    cd math-agent
+    git clone https://github.com/inamdarmihir/math-prof-ai.git
+    cd math-prof-ai
     ```
 
 2. Create and activate a virtual environment (recommended):
@@ -90,7 +94,7 @@
     QDRANT_COLLECTION=math_knowledge  # optional
     ```
 
-### ▶️ Running the Math Agent
+### ▶️ Running the Math Prof AI
 
 Start the Streamlit application:
 
@@ -140,7 +144,7 @@ The application will be available at [http://localhost:8501](http://localhost:85
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit pull requests or open issues to improve the Math Agent.
+Contributions are welcome! Please feel free to submit pull requests or open issues to improve the Math Prof AI.
 
 ### ⚙️ Development Setup
 
@@ -167,3 +171,7 @@ This project is licensed under the terms of the included LICENSE file.
 - Streamlit for the web interface framework.
 - Qdrant for vector database capabilities.
 - JEE examination board for inspiring the benchmark problems.
+
+---
+
+This README provides a comprehensive overview of the Math Prof AI project, including its architecture, features, installation instructions, and guidelines for contributing. It is designed to be informative and engaging, helping users understand and navigate the project effectively.
