@@ -1,0 +1,61 @@
+{
+  "query": "Solve $$$$$$2x^{2}$$-$$3x+5=0$$$$$$",
+  "history": [],
+  "current_step": "concepts_searched",
+  "result": {
+    "text_equations": [
+      "2x^2-3x+5=0"
+    ],
+    "solutions": [
+      "x = (3 + i\u221a31)/4 or x = (3 - i\u221a31)/4"
+    ],
+    "formatted_solutions": [
+      "x = (3 + i\u221a31)/4 or x = (3 - i\u221a31)/4"
+    ]
+  },
+  "execution_times": {
+    "extract_equations": 0.008495092391967773,
+    "search_math_concepts": 5.263728857040405,
+    "solve_equations": 0.0008640289306640625,
+    "format_results": 0.00011205673217773438,
+    "total": 5.404537916183472
+  },
+  "search_results": [
+    {
+      "source": "exa",
+      "title": "Using the Quadratic Formula | Brilliant Math & Science Wiki",
+      "url": "https://brilliant.org/wiki/quadratic-formula/",
+      "snippet": null
+    },
+    {
+      "source": "exa",
+      "title": "Quadratic formula explained (article) | Khan Academy",
+      "url": "https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:quadratic-functions-equations/x2f8bb11595b61c86:quadratic-formula-a1/a/quadratic-formula-explained-article",
+      "snippet": null
+    },
+    {
+      "source": "exa",
+      "title": "Using the quadratic formula | Algebra (video) | Khan Academy",
+      "url": "https://www.khanacademy.org/math/algebra-home/alg-quadratics/alg-solving-quadratics-using-the-quadratic-formula/v/quadratic-formula-1",
+      "snippet": null
+    },
+    {
+      "source": "vector_db",
+      "title": "Solving Quadratic Equations",
+      "url": "https://en.wikipedia.org/wiki/Quadratic_equation",
+      "snippet": "To solve a quadratic equation ax\u00b2 + bx + c = 0, use the quadratic formula: x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / 2a."
+    },
+    {
+      "source": "vector_db",
+      "title": "Systems of Linear Equations",
+      "url": "https://en.wikipedia.org/wiki/System_of_linear_equations",
+      "snippet": "A system of linear equations can be solved using substitution, elimination, or matrix methods. For a system of two equations with two unknowns, the solution is the intersection point."
+    },
+    {
+      "source": "vector_db",
+      "title": "Limits",
+      "url": "https://en.wikipedia.org/wiki/Limit_(mathematics)",
+      "snippet": "The limit of a function f(x) as x approaches a value c is the value that f(x) gets arbitrarily close to as x gets arbitrarily close to c."
+    }
+  ]
+}

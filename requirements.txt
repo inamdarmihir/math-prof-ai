@@ -1,14 +1,14 @@
 # Core dependencies
-streamlit>=1.24.0
+streamlit>=1.32.0
 sympy>=1.12
 python-dotenv>=1.0.0
-openai>=1.0.0
-qdrant-client>=1.6.0
+openai>=1.12.0
+qdrant-client>=1.7.0
 
 # Math and data processing
-numpy>=1.24.3
+numpy>=1.24.0
 pandas>=2.0.0
-matplotlib>=3.7.1
+matplotlib>=3.7.0
 scipy>=1.10.0
 
 # Utilities
@@ -17,9 +17,19 @@ requests>=2.31.0
 tiktoken>=0.5.2
 aiohttp>=3.8.5
 
+# LangGraph and LangSmith
+langgraph>=0.0.20
+langsmith>=0.1.0
+plotly>=5.18.0
+
 # Optional components (can be commented out if not needed)
 # langchain>=0.0.350
 # langchain-openai>=0.0.5
 # langchain-community>=0.0.20
 # langchain-core>=0.1.20
 # faiss-cpu>=1.7.4
+
+# Added from the code block
+exa-py>=0.1.0
+antlr4-python3-runtime>=4.11.0
+watchdog>=3.0.0
