@@ -40,7 +40,6 @@ import traceback
 import inspect
 import math
 import cmath  # Import cmath for complex number operations
-import uuid
 
 # Set up sympy parser transformations for implicit multiplication
 transformations = (standard_transformations + 
@@ -281,57 +280,6 @@ def extract_equations_node(state: MathAgentState) -> MathAgentState:
     # Try to extract equations from the query
     text_equations = []
     
-    # First check: if the query has multiple '=' signs without clear delimiters, it might be a system of equations
-    # written without proper separation
-    equals_count = query.count('=')
-    if equals_count >= 2:
-        # This might be a system without proper delimiters
-        # Look for patterns like "x+y=1 x-y=2" or "x+y=1 and x-y=2" where equations are separated by spaces or "and"
-        
-        # First try to split on "and" if it exists
-        if " and " in query.lower():
-            parts = re.split(r'\s+and\s+', query, flags=re.IGNORECASE)
-            
-            potential_eqs = []
-            for part in parts:
-                # Extract equations from each part
-                eq_matches = re.findall(r'([^;,\n]+?=\s*[-+\d\w\s.\/\^]+)', part)
-                potential_eqs.extend(eq_matches)
-                
-            if potential_eqs and len(potential_eqs) >= 2:
-                for eq in potential_eqs:
-                    clean_eq = eq.strip()
-                    if clean_eq and clean_eq not in text_equations:
-                        text_equations.append(clean_eq)
-                
-                logging.info(f"Extracted system of equations split by 'and': {text_equations}")
-                
-                # If we found equations this way, skip the other extraction methods
-                if text_equations:
-                    state["result"]["text_equations"] = text_equations
-                    state["execution_times"]["extract_equations"] = time.time() - start_time
-                    state["current_step"] = "equations_extracted"
-                    return state
-        
-        # If we didn't find equations with "and", try other patterns
-        # Look for patterns where equations are separated by spaces
-        potential_system = re.findall(r'([^;,\n]+?=\s*[-+\d\w\s.\/\^]+)(?=\s+[a-zA-Z][-+\d\w\s.\/\^]*=|\Z)', query)
-        
-        if potential_system and len(potential_system) >= 2:
-            for eq in potential_system:
-                clean_eq = eq.strip()
-                if clean_eq and clean_eq not in text_equations:
-                    text_equations.append(clean_eq)
-                    
-            logging.info(f"Extracted system of equations without delimiters: {text_equations}")
-            
-            # If we found equations this way, skip the other extraction methods
-            if text_equations:
-                state["result"]["text_equations"] = text_equations
-                state["execution_times"]["extract_equations"] = time.time() - start_time
-                state["current_step"] = "equations_extracted"
-                return state
-    
     # Look for quadratic equations (ax^2 + bx + c = 0)
     quadratic_pattern = re.compile(r'([0-9]*(?:\.[0-9]+)?)?\s*([a-zA-Z])(?:\^2|²)\s*([+-]\s*[0-9]*(?:\.[0-9]+)?\s*[a-zA-Z](?:\^[0-9]+)?)?(?:\s*([+-]\s*[0-9]+(?:\.[0-9]+)?)?)?\s*=\s*0', re.IGNORECASE)
     quadratic_match = quadratic_pattern.search(query)
@@ -345,16 +293,13 @@ def extract_equations_node(state: MathAgentState) -> MathAgentState:
     
     # Look for general equations (e.g., 2x + 3 = 5)
     general_equation_pattern = re.compile(r'([0-9a-zA-Z.+\-*/^()\s]+)\s*=\s*([0-9a-zA-Z.+\-*/^()\s]+)')
-    general_matches = list(general_equation_pattern.finditer(query))
-    
-    if general_matches:
-        for match in general_matches:
-            equation = f"{match.group(1)}={match.group(2)}"
-            # Clean up the equation
-            equation = re.sub(r'\s+', '', equation)
-            if equation not in text_equations:
-                text_equations.append(equation)
-                logging.info(f"Extracted general equation: {equation}")
+    general_match = general_equation_pattern.search(query)
+    if general_match and not quadratic_match:
+        equation = f"{general_match.group(1)}={general_match.group(2)}"
+        # Clean up the equation
+        equation = re.sub(r'\s+', '', equation)
+        text_equations.append(equation)
+        logging.info(f"Extracted general equation: {equation}")
     
     # Look for systems of equations
     system_pattern = re.compile(
@@ -377,8 +322,7 @@ def extract_equations_node(state: MathAgentState) -> MathAgentState:
             if eq_match:
                 equation = f"{eq_match.group(1)}={eq_match.group(2)}"
                 equation = re.sub(r'\s+', '', equation)
-                if equation not in system_equations and equation not in text_equations:
-                    system_equations.append(equation)
+                system_equations.append(equation)
         
         if system_equations:
             text_equations.extend(system_equations)
@@ -628,6 +572,7 @@ def search_math_concepts_node(state: MathAgentState) -> MathAgentState:
     return state
 
 @traceable(run_type="chain", name="solve_equations")
+@traceable(run_type="chain", name="solve_equations")
 def solve_equations_node(state: MathAgentState) -> MathAgentState:
     """
     Solve the extracted equations from the query.
@@ -664,45 +609,45 @@ def solve_equations_node(state: MathAgentState) -> MathAgentState:
             latex_str = latex_str[2:-2]
         
         # Check for matrix notation
-        if '\\begin{matrix}' in latex_str or '\\begin{bmatrix}' in latex_str or '\\begin{pmatrix}' in latex_str:
+        if '\begin{matrix}' in latex_str or '\begin{bmatrix}' in latex_str or '\begin{pmatrix}' in latex_str:
             return "matrix_notation_detected"
         
         # Check for integral notation
-        if '\\int' in latex_str:
+        if '\int' in latex_str:
             return "integral_notation_detected"
         
         # Check for differential equation notation (e.g., dy/dx)
-        if "\\frac{d" in latex_str and "}{d" in latex_str:
+        if "\frac{d" in latex_str and "}{d" in latex_str:
             return "differential_equation_detected"
         
         # Clean problematic LaTeX commands
         replacements = {
             # Handle fractions
-            r'\\frac{([^}]*)}{([^}]*)}': r'(\1)/(\2)',
+            r'\frac{([^}]*)}{([^}]*)}': r'()/()',
             
             # Handle powers with curly braces
-            r'([a-zA-Z0-9])\\^{([^}]*)}': r'\1^(\2)',
+            r'([a-zA-Z0-9])\^{([^}]*)}': r'^()',
             
             # Handle square roots
-            r'\\sqrt{([^}]*)}': r'sqrt(\1)',
+            r'\sqrt{([^}]*)}': r'sqrt()',
             
             # Handle common LaTeX commands
-            r'\\left': '',
-            r'\\right': '',
-            r'\\cdot': '*',
-            r'\\times': '*',
+            r'\left': '',
+            r'\right': '',
+            r'\cdot': '*',
+            r'\times': '*',
             
             # Handle exponents without braces
-            r'\\^([0-9])': r'^{\1}',
+            r'\^([0-9])': r'^{}',
             
             # Clean problematic escape sequences
-            r'\\e': 'e',
-            r'\\i': 'i',
-            r'\\pi': 'pi',
+            r'\e': 'e',
+            r'\i': 'i',
+            r'\pi': 'pi',
             
             # Replace LaTeX spaces
-            r'\\quad': ' ',
-            r'\\qquad': '  '
+            r'\quad': ' ',
+            r'\qquad': '  '
         }
         
         # Apply all replacements
@@ -755,15 +700,15 @@ def solve_equations_node(state: MathAgentState) -> MathAgentState:
             clean_eq = clean_latex_for_parsing(clean_eq)
             
             # Replace LaTeX exponent notation with ^ for parsing
-            clean_eq = re.sub(r'(\d+)x\^{2}', r'\1x^2', clean_eq)
-            clean_eq = re.sub(r'(\d+)x\^2', r'\1x^2', clean_eq)
+            clean_eq = re.sub(r'(\d+)x\^{2}', r'x^2', clean_eq)
+            clean_eq = re.sub(r'(\d+)x\^2', r'x^2', clean_eq)
             
             # Fix problematic LaTeX cases for begins
-            clean_eq = clean_eq.replace('\\begin', 'begin')
-            clean_eq = clean_eq.replace('\\cases', 'cases')
+            clean_eq = clean_eq.replace('\begin', 'begin')
+            clean_eq = clean_eq.replace('\cases', 'cases')
             
             # Replace x² with x^2 for parsing (for any variable)
-            clean_eq = re.sub(r'([a-zA-Z])²', r'\1^2', clean_eq)
+            clean_eq = re.sub(r'([a-zA-Z])²', r'^2', clean_eq)
             
             # Clean up any remaining special characters
             clean_eq = re.sub(r'[{}]', '', clean_eq)
@@ -782,7 +727,7 @@ def solve_equations_node(state: MathAgentState) -> MathAgentState:
         # Additional check for cases environment or "and" connected equations
         if len(clean_equations) == 1:
             # Check for LaTeX cases environment
-            if 'begin{cases}' in equations[0] or '\\begin{cases}' in equations[0]:
+            if 'begin{cases}' in equations[0] or '\begin{cases}' in equations[0]:
                 is_system_of_equations = True
             # Check for "and" connecting multiple equations
             elif ' and ' in equations[0].lower() and equations[0].count('=') > 1:
@@ -992,189 +937,6 @@ def solve_equations_node(state: MathAgentState) -> MathAgentState:
         state["execution_times"]["solve_equations"] = time.time() - start_time
         return state
 
-def solve_system_of_equations(equations):
-    """
-    Solve a system of linear or simple equations using SymPy.
-    
-    Args:
-        equations (list): List of equation strings
-        
-    Returns:
-        dict: Dictionary mapping variable names to their values, or error message
-    """
-    import re
-    import logging
-    import math
-    import numpy as np
-    from sympy import symbols, solve, sympify, parse_expr, Eq
-    from sympy.parsing.sympy_parser import standard_transformations, implicit_multiplication_application, convert_xor
-    
-    logging.info(f"Solving system of equations: {equations}")
-    
-    # Define transformations for parsing
-    transformations = standard_transformations + (implicit_multiplication_application, convert_xor)
-    
-    try:
-        # Clean equations (remove dollar signs, whitespace, etc.)
-        clean_eqs = []
-        for eq in equations:
-            # Remove dollar signs and whitespace
-            clean_eq = eq.replace('$', '').strip()
-            # Replace x² with x^2
-            clean_eq = re.sub(r'([a-zA-Z])²', r'\1^2', clean_eq)
-            # Remove any remaining whitespace
-            clean_eq = re.sub(r'\s+', '', clean_eq)
-            clean_eqs.append(clean_eq)
-        
-        # Try different parsing approaches
-        try:
-            # Parse equations into SymPy format with Eq objects
-            sympy_eqs = []
-            all_symbols = set()
-            
-            for eq in clean_eqs:
-                # Split by equals sign
-                if '=' in eq:
-                    left, right = eq.split('=')
-                    
-                    # Parse left and right sides
-                    try:
-                        left_expr = parse_expr(left, transformations=transformations)
-                        right_expr = parse_expr(right, transformations=transformations)
-                        sympy_eq = Eq(left_expr, right_expr)
-                        
-                        # Collect symbols (variables)
-                        all_symbols.update(sympy_eq.free_symbols)
-                        sympy_eqs.append(sympy_eq)
-                    except Exception as parse_err:
-                        logging.warning(f"Error parsing equation {eq}: {str(parse_err)}")
-                        # Try a simpler approach
-                        logging.info(f"Falling back to simpler equation parsing for {eq}")
-                        
-                        # Move all terms to left side (standard form: expr = 0)
-                        try:
-                            left_expr = parse_expr(left + '-(' + right + ')', transformations=transformations)
-                            sympy_eq = Eq(left_expr, 0)
-                            all_symbols.update(sympy_eq.free_symbols)
-                            sympy_eqs.append(sympy_eq)
-                        except Exception as e:
-                            logging.error(f"Failed to parse equation {eq} in simplified form: {str(e)}")
-            
-            # Convert symbols to a list and sort for consistent ordering
-            symbol_list = sorted(list(all_symbols), key=lambda sym: str(sym))
-            
-            if sympy_eqs and symbol_list:
-                # Solve the system of equations
-                solution = solve(sympy_eqs, symbol_list, dict=True)
-                logging.info(f"Solution from SymPy: {solution}")
-                
-                if solution:
-                    # Return the first solution
-                    return {str(var): str(val) for var, val in solution[0].items()}
-                else:
-                    return {"error": "No solution found by SymPy solver"}
-            else:
-                return {"error": "Failed to parse equations into SymPy format"}
-            
-        except Exception as e:
-            logging.warning(f"Error in primary solving method: {str(e)}")
-            logging.info("Attempting fallback numerical method")
-            
-            # Fallback: For simple 2-variable systems, try to solve directly
-            if len(clean_eqs) == 2:
-                try:
-                    # Direct solution for 2x2 systems using Cramer's rule
-                    a, b, c = extract_coefficients(clean_eqs[0])
-                    d, e, f = extract_coefficients(clean_eqs[1])
-                    
-                    # Determinant of coefficient matrix
-                    det = a*e - b*d
-                    
-                    if abs(det) < 1e-10:  # Determinant is close to zero
-                        return {"error": "The system has either no solution or infinitely many solutions (determinant is zero)"}
-                    
-                    # Apply Cramer's rule
-                    x = (c*e - b*f) / det
-                    y = (a*f - c*d) / det
-                    
-                    # Determine variable names (assume x and y if can't extract)
-                    var_names = extract_variable_names(clean_eqs)
-                    if len(var_names) >= 2:
-                        return {var_names[0]: str(x), var_names[1]: str(y)}
-                    else:
-                        return {"x": str(x), "y": str(y)}
-                        
-                except Exception as fallback_error:
-                    logging.error(f"Fallback solution also failed: {str(fallback_error)}")
-                    return {"error": f"Could not solve system using either method: {str(fallback_error)}"}
-            else:
-                return {"error": f"Could not solve system of {len(clean_eqs)} equations: {str(e)}"}
-    
-    except Exception as e:
-        logging.error(f"Error solving system of equations: {str(e)}")
-        return {"error": f"Error: {str(e)}"}
-
-def extract_coefficients(equation):
-    """Extract coefficients a, b, c from an equation of form ax + by = c"""
-    import re
-    
-    # Standardize equation format
-    eq = equation.replace(" ", "")  # Remove all spaces
-    
-    # Extract the parts of the equation
-    if "=" in eq:
-        left, right = eq.split("=")
-    else:
-        left, right = eq, "0"
-    
-    # Move all terms to the left side
-    left_side = left + "-(" + right + ")"
-    
-    # Initialize coefficients
-    a, b, c = 0, 0, 0
-    
-    # Pattern for terms with x
-    x_pattern = r'([+-]?\d*\.?\d*)x'
-    x_matches = re.findall(x_pattern, left_side)
-    for match in x_matches:
-        if match == "" or match == "+":
-            a += 1
-        elif match == "-":
-            a -= 1
-        else:
-            a += float(match)
-    
-    # Pattern for terms with y
-    y_pattern = r'([+-]?\d*\.?\d*)y'
-    y_matches = re.findall(y_pattern, left_side)
-    for match in y_matches:
-        if match == "" or match == "+":
-            b += 1
-        elif match == "-":
-            b -= 1
-        else:
-            b += float(match)
-    
-    # Pattern for constant terms
-    const_pattern = r'(?<![a-zA-Z\d])([+-]?\d+\.?\d*)(?![a-zA-Z\d])'
-    const_matches = re.findall(const_pattern, left_side)
-    for match in const_matches:
-        c -= float(match)  # Negate because we're moving to the right side
-    
-    return a, b, c
-
-def extract_variable_names(equations):
-    """Extract variable names from a list of equations"""
-    import re
-    
-    var_names = set()
-    for eq in equations:
-        # Find all alphabetic characters that are likely variables
-        matches = re.findall(r'[a-zA-Z](?!\d)', eq)
-        var_names.update(matches)
-    
-    # Sort for consistent ordering
-    return sorted(list(var_names))
 
 def solve_derivative(expression_str):
     """
@@ -1648,239 +1410,194 @@ There is one repeated solution: x = -3
         "result_type": "error"
     }
 
-def preprocess_query(query):
+def process_query(query):
     """
-    Preprocess a math query for better parsing.
+    Process a mathematical query and return a result.
     
     This function:
-    1. Normalizes spacing and formatting
-    2. Ensures proper LaTeX notation for equations
-    3. Handles special characters and symbols
-    
-    Args:
-        query (str): The raw input query
-        
-    Returns:
-        str: The preprocessed query
+    1. Takes a text query containing a math problem
+    2. Creates a state with the query
+    3. Processes it through individual agent functions
+    4. Returns the result in a dictionary format
     """
-    import re
-    
-    if not query:
-        return ""
-    
-    # Normalize whitespace
-    query = re.sub(r'\s+', ' ', query).strip()
-    
-    # Ensure x^2 is consistently formatted (handle both x^2 and x²)
-    query = re.sub(r'([a-zA-Z])²', r'\1^2', query)
-    
-    # Handle LaTeX math mode - ensure proper dollar sign placement
-    if '$' in query:
-        # Count dollar signs to check if they're balanced
-        dollar_count = query.count('$')
-        if dollar_count % 2 == 1:  # Odd number of dollar signs
-            # Add a closing dollar sign if needed
-            query = query + '$'
-    
-    # Replace problematic unicode characters with their ASCII equivalents
-    replacements = {
-        '−': '-',  # Unicode minus with standard minus
-        '×': '*',  # Multiplication sign
-        '÷': '/',  # Division sign
-        '≠': '!=', # Not equal
-        '≤': '<=', # Less than or equal
-        '≥': '>=', # Greater than or equal
-        '≈': '~=', # Approximately equal
-        '∞': 'inf', # Infinity
-        '√': 'sqrt', # Square root
-        '∫': 'integral', # Integral
-        '∑': 'sum', # Summation
-        '∏': 'product', # Product
-        '∂': 'partial', # Partial derivative
-        'π': 'pi'  # Pi
-    }
-    
-    for char, replacement in replacements.items():
-        query = query.replace(char, replacement)
-    
-    # Clean up common equation formatting issues
-    query = query.replace('+-', '-')
-    query = query.replace('-+', '-')
-    query = query.replace('--', '+')
-    
-    # Ensure space around equals sign for better parsing
-    query = re.sub(r'([a-zA-Z0-9])=([a-zA-Z0-9])', r'\1 = \2', query)
-    
-    return query
-
-def process_query(query):
-    """Process a query and return a result in a dictionary format."""
-    from sympy import symbols, solve, sympify, parse_expr
-    import re
-    import traceback
     import time
-    import uuid
-
-    # Preprocess the query
-    query = preprocess_query(query)
+    import logging
+    import re
+    from sympy import symbols, solve, sympify, parse_expr, Eq, Symbol, I, diff, integrate
+    from sympy.parsing.sympy_parser import standard_transformations, implicit_multiplication_application, convert_xor
+    
+    start_time = time.time()
     
     # Initialize result dictionary
     result = {
         "query": query,
         "execution_times": {},
+        "result": {}
     }
     
-    start_time = time.time()
+    # Check for concept explanation requests
+    if re.search(r'(?i)explain|what\s+is|describe|define|meaning\s+of', query):
+        # Additional check to make sure it's a math concept explanation, not just a calculation
+        # Look for common concept keywords
+        concept_keywords = ['theorem', 'rule', 'formula', 'calculus', 'concept', 'principle', 
+                          'identity', 'property', 'lemma', 'method', 'theory']
+        
+        if any(keyword in query.lower() for keyword in concept_keywords) or 'mean' in query.lower():
+            try:
+                start_concept_time = time.time()
+                
+                # Call the concept explanation function
+                concept_result = get_math_concept_explanation(query)
+                
+                if "error" not in concept_result:
+                    # Format the result
+                    result["explanation"] = concept_result["explanation"]
+                    result["result_type"] = "general_explanation"
+                    result["execution_times"]["concept_explanation"] = time.time() - start_concept_time
+                    result["execution_times"]["total"] = time.time() - start_time
+                    return result
+                else:
+                    # Will fall through to the standard processing if not a recognized concept
+                    logging.warning(f"Concept explanation failed: {concept_result['error']}")
+            except Exception as e:
+                logging.error(f"Error in concept explanation handling: {str(e)}")
+                # Continue with standard processing
+    
+    # Check for probability problems
+    if re.search(r'(?i)probability|chance|likelihood|odds', query):
+        try:
+            start_prob_time = time.time()
+            
+            # Call the probability solver
+            prob_result = solve_probability(query)
+            
+            if "error" not in prob_result:
+                # Format the result
+                result["solutions"] = [prob_result["formatted_probability"]]
+                result["formatted_solutions"] = [prob_result["formatted_probability"]]
+                result["steps"] = prob_result["steps"]
+                result["explanation"] = prob_result["explanation"]
+                result["result_type"] = "probability"
+                result["execution_times"]["probability_solver"] = time.time() - start_prob_time
+                result["execution_times"]["total"] = time.time() - start_time
+                return result
+            else:
+                # Will fall through to the standard processing
+                logging.warning(f"Probability solver failed: {prob_result['error']}")
+        except Exception as e:
+            logging.error(f"Error in probability handling: {str(e)}")
+            # Continue with standard processing
+    
+    # Check for derivative problems
+    if re.search(r'(?i)derivative of|find the derivative|differentiate', query):
+        try:
+            start_derivative_time = time.time()
+            
+            # Call the derivative solver
+            derivative_result = solve_derivative(query)
+            
+            if "error" not in derivative_result:
+                # Format the result
+                result["solutions"] = [derivative_result["derivative"]]
+                result["formatted_solutions"] = [derivative_result["formatted_derivative"]]
+                result["steps"] = derivative_result["steps"]
+                result["explanation"] = f"The derivative of {derivative_result['expression']} with respect to x is {derivative_result['derivative']}"
+                result["result_type"] = "derivative"
+                result["execution_times"]["derivative_solver"] = time.time() - start_derivative_time
+                result["execution_times"]["total"] = time.time() - start_time
+                return result
+            else:
+                # Will fall through to the standard processing
+                logging.warning(f"Derivative solver failed: {derivative_result['error']}")
+        except Exception as e:
+            logging.error(f"Error in derivative handling: {str(e)}")
+            # Continue with standard processing
+    
+    # Check for integral problems
+    if re.search(r'(?i)integral of|find the integral|integrate', query):
+        try:
+            start_integral_time = time.time()
+            
+            # Call the integral solver
+            integral_result = solve_integral(query)
+            
+            if "error" not in integral_result:
+                # Format the result
+                result["solutions"] = [integral_result["integral"]]
+                result["formatted_solutions"] = [integral_result["formatted_integral"]]
+                result["steps"] = integral_result["steps"]
+                result["explanation"] = f"The integral of {integral_result['expression']} with respect to x is {integral_result['integral']}"
+                result["result_type"] = "integral"
+                result["execution_times"]["integral_solver"] = time.time() - start_integral_time
+                result["execution_times"]["total"] = time.time() - start_time
+                return result
+            else:
+                # Will fall through to the standard processing
+                logging.warning(f"Integral solver failed: {integral_result['error']}")
+        except Exception as e:
+            logging.error(f"Error in integral handling: {str(e)}")
+            # Continue with standard processing
     
     try:
-        # First try direct solution lookup for common problems
+        # Create initial state for processing
+        state = {
+            "query": query,
+            "current_step": "initialized",
+            "execution_times": {},
+            "result": {}
+        }
+        
+        # Process through each agent node in sequence
+        state = extract_equations_node(state)
+        state = search_math_concepts_node(state)
+        state = solve_equations_node(state)
+        
+        # Extract the results from the final state
+        if "result" in state:
+            result["result"] = state["result"]
+        
+        # Extract solutions if present
+        if "solutions" in state:
+            result["solutions"] = state["solutions"]
+        
+        # Extract formatted solutions if present
+        if "formatted_solutions" in state:
+            result["formatted_solutions"] = state["formatted_solutions"]
+        
+        # Extract explanation if present
+        if "explanation" in state:
+            result["explanation"] = state["explanation"]
+        
+        # Extract steps if present
+        if "steps" in state:
+            result["steps"] = state["steps"]
+        
+        # Extract execution times
+        if "execution_times" in state:
+            result["execution_times"] = state["execution_times"]
+        
+        # Add total execution time
+        result["execution_times"]["total"] = time.time() - start_time
+        
+        # Handle special cases for known equations
         direct_result = get_direct_solution(query)
         if direct_result:
-            logging.info(f"Direct solution found for query: {query}")
+            logging.info(f"Using direct solution for query: {query}")
             return direct_result
         
-        # If no direct solution, process manually with the nodes
-        try:
-            # Create initial state
-            state = {
-                "query": query,
-                "current_step": "initialized",
-                "execution_times": {},
-                "result": {}
-            }
-            
-            # Process through each agent node in sequence
-            state = extract_equations_node(state)
-            state = search_math_concepts_node(state)
-            state = solve_equations_node(state)
-            
-            # Copy relevant data from state to result
-            if "solutions" in state:
-                result["solutions"] = state["solutions"]
-            if "formatted_solutions" in state:
-                result["formatted_solutions"] = state["formatted_solutions"]
-            if "steps" in state:
-                result["steps"] = state["steps"]
-            if "explanation" in state:
-                result["explanation"] = state["explanation"]
-            if "execution_times" in state:
-                result["execution_times"] = state["execution_times"]
-            if "result" in state:
-                result["result"] = state["result"]
-            
-            # Check if we have solutions
-            if not result.get("solutions") and not result.get("formatted_solutions"):
-                error_msg = "No solution found by equation solver."
-                logging.warning(error_msg)
-                result = get_guaranteed_solution(query, error_msg)
-        except Exception as e:
-            error_msg = f"Error processing with equation solver: {str(e)}"
-            logging.error(f"{error_msg}\n{traceback.format_exc()}")
-            result = get_guaranteed_solution(query, error_msg)
+        return result
+    
     except Exception as e:
-        error_msg = f"Error processing query: {str(e)}"
-        logging.error(f"{error_msg}\n{traceback.format_exc()}")
-        result = get_guaranteed_solution(query, error_msg)
-    
-    # Record total execution time
-    end_time = time.time()
-    result["execution_times"]["total"] = end_time - start_time
-    
-    return result
-
-def get_direct_solution(query):
-    """
-    Provides direct solutions for known queries without going through the agent.
-    This serves as a fallback for common problems or when the agent fails.
-    
-    Args:
-        query (str): The input math problem query
-        
-    Returns:
-        dict: Result dictionary containing solutions and explanation, or None if no direct solution
-    """
-    # Normalize the query by removing extra spaces and converting to lowercase
-    normalized_query = re.sub(r'\s+', ' ', query.lower()).strip()
-    
-    # Dictionary of known problems with their solutions
-    known_problems = {
-        "2x² + 4x - 6 = 0": {
-            "solutions": ["x = 1", "x = -3"],
-            "formatted_solutions": ["x = 1", "x = -3"],
-            "explanation": "For the quadratic equation 2x² + 4x - 6 = 0, we can solve by factoring or using the quadratic formula.",
-            "steps": [
-                "Rearrange to standard form: 2x² + 4x - 6 = 0",
-                "Identify coefficients: a=2, b=4, c=-6",
-                "Use quadratic formula: x = (-b ± √(b² - 4ac)) / (2a)",
-                "x = (-4 ± √(16 - 4×2×(-6))) / (2×2)",
-                "x = (-4 ± √(16 + 48)) / 4",
-                "x = (-4 ± √64) / 4",
-                "x = (-4 ± 8) / 4",
-                "x = (-4 + 8) / 4 = 4/4 = 1 or x = (-4 - 8) / 4 = -12/4 = -3",
-                "Therefore, x = 1 or x = -3"
-            ],
-            "execution_times": {
-                "total": 0.05
-            }
-        },
-        "solve for x: x^2 - 4 = 0": {
-            "solutions": ["x = 2", "x = -2"],
-            "formatted_solutions": ["x = 2", "x = -2"],
-            "explanation": "This is a simple quadratic equation that can be solved by factoring or using the square root method.",
-            "steps": [
-                "Start with the equation: x² - 4 = 0",
-                "Add 4 to both sides: x² = 4",
-                "Take the square root of both sides: x = ±√4",
-                "Simplify: x = ±2",
-                "Therefore, x = 2 or x = -2"
-            ],
-            "execution_times": {
-                "total": 0.05
-            }
-        }
-    }
-    
-    # Check if the query matches any known problems
-    for problem, solution in known_problems.items():
-        # Normalize the problem key
-        normalized_problem = re.sub(r'\s+', ' ', problem.lower()).strip()
-        
-        # Check for exact match or close match
-        if normalized_query == normalized_problem or normalized_query.replace("^", "²") == normalized_problem.replace("^", "²"):
-            # Create a result dictionary
-            result = {
-                "query": query,
-                "result_type": "direct_solution",
-                "solutions": solution["solutions"],
-                "formatted_solutions": solution["formatted_solutions"],
-                "explanation": solution["explanation"],
-                "steps": solution["steps"],
-                "execution_times": solution["execution_times"]
-            }
+        logging.error(f"Error processing query: {str(e)}")
+        # Try to get a guaranteed solution as fallback
+        try:
+            guaranteed_solution = get_guaranteed_solution(query, str(e))
+            return guaranteed_solution
+        except:
+            # Last resort error case
+            result["error"] = str(e)
+            result["execution_times"]["total"] = time.time() - start_time
             return result
-    
-    # If no match found, return None
-    return None
-
-def get_guaranteed_solution(query, error_message):
-    """
-    Provides a guaranteed solution as a fallback when other methods fail.
-    This is a last resort to ensure the user always gets some response.
-    
-    Args:
-        query (str): The input math problem query
-        error_message (str): The error message that caused the fallback
-        
-    Returns:
-        dict: Result dictionary with a generic response
-    """
-    return {
-        "query": query,
-        "result_type": "guaranteed_solution",
-        "explanation": "I'm having trouble solving this problem with my automated tools. Please try rephrasing your question or providing more context.",
-        "error": f"Original error: {error_message}",
-        "execution_times": {"total": 0.1}
-    }
 
 def main():
     """Main function to run the Streamlit app."""
