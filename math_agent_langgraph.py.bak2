@@ -1302,16 +1302,6 @@ def solve_derivative(expression_str):
     # Further clean the expression
     cleaned_expr = cleaned_expr.strip(' .,;:')
     
-    # Replace superscript numbers with regular power notation
-    cleaned_expr = re.sub(r'([a-zA-Z])²', r'\1^2', cleaned_expr)
-    cleaned_expr = re.sub(r'([a-zA-Z])³', r'\1^3', cleaned_expr)
-    cleaned_expr = re.sub(r'([a-zA-Z])⁴', r'\1^4', cleaned_expr)
-    cleaned_expr = re.sub(r'([a-zA-Z])⁵', r'\1^5', cleaned_expr)
-    cleaned_expr = re.sub(r'([a-zA-Z])⁶', r'\1^6', cleaned_expr)
-    cleaned_expr = re.sub(r'([a-zA-Z])⁷', r'\1^7', cleaned_expr)
-    cleaned_expr = re.sub(r'([a-zA-Z])⁸', r'\1^8', cleaned_expr)
-    cleaned_expr = re.sub(r'([a-zA-Z])⁹', r'\1^9', cleaned_expr)
-    
     # Setup transformations for parsing
     transformations = standard_transformations + (implicit_multiplication_application, convert_xor)
     
@@ -1321,23 +1311,6 @@ def solve_derivative(expression_str):
         
         # Replace ^ with ** for exponentiation
         cleaned_expr = cleaned_expr.replace('^', '**')
-        
-        # Handle special known cases
-        if cleaned_expr == "x**3 - 3x**2 + 2x - 1" or cleaned_expr == "x**3-3x**2+2x-1":
-            return {
-                "expression": "x³ - 3x² + 2x - 1",
-                "derivative": "3x² - 6x + 2",
-                "formatted_derivative": "3x² - 6x + 2",
-                "steps": [
-                    "Given the expression f(x) = x³ - 3x² + 2x - 1",
-                    "Apply the power rule: d/dx(x^n) = n·x^(n-1)",
-                    "For x³: d/dx(x³) = 3x²",
-                    "For -3x²: d/dx(-3x²) = -6x",
-                    "For 2x: d/dx(2x) = 2",
-                    "For -1: d/dx(-1) = 0",
-                    "Combine all terms: f'(x) = 3x² - 6x + 2"
-                ]
-            }
         
         # Parse the expression
         expr = parse_expr(cleaned_expr, transformations=transformations)
@@ -1793,6 +1766,11 @@ def preprocess_query(query):
         return ""
     
     # Remove common prefixes like "Solve equation" or "Find solution to"
+    query = re.sub(r'^(?:solve|find|calculate|determine)\s+(?:the\s+)?(?:equation|solution|value|answer|result)(?:\s+(?:of|to|for))?\s*', '', query, flags=re.IGNORECASE).strip()
+    
+    # Remove common prefixes like "Solve equation" or "Find solution to"
+    query = re.sub(r'^(?:solve|find|calculate|determine)\s+(?:the\s+)?(?:equation|solution|value|answer|result)(?:\s+(?:of|to|for))?\s*', '', query, flags=re.IGNORECASE).strip()
+    
     # Remove common prefixes like "Solve equation" or "Find solution to"
     query = re.sub(r'^(?:solve|find|calculate|determine)\s+(?:the\s+)?(?:equation|solution|value|answer|result)(?:\s+(?:of|to|for))?\s*', '', query, flags=re.IGNORECASE).strip()
     
@@ -1843,7 +1821,7 @@ def preprocess_query(query):
 
 def process_query(query):
     """Process a query and return a result in a dictionary format."""
-    from sympy import symbols, solve, sympify, parse_expr, diff, integrate
+    from sympy import symbols, solve, sympify, parse_expr
     import re
     import traceback
     import time
@@ -1867,88 +1845,7 @@ def process_query(query):
             logging.info(f"Direct solution found for query: {query}")
             return direct_result
         
-        # Check if this is a derivative question
-        if re.search(r'(?i)(?:derivative|differentiate|find\s+d/dx|find\s+the\s+derivative)', query):
-            try:
-                # Extract the expression to differentiate
-                match = re.search(r'(?i)(?:derivative|differentiate|find\s+d/dx|find\s+the\s+derivative)\s+of\s+(.*?)(?:\s+with\s+respect\s+to|$)', query)
-                if match:
-                    expression_str = match.group(1).strip()
-                    derivative_result = solve_derivative(expression_str)
-                    
-                    if "error" not in derivative_result:
-                        result["solutions"] = [{"derivative": derivative_result["derivative"]}]
-                        result["formatted_solutions"] = [f"The derivative is: {derivative_result['derivative']}"]
-                        result["steps"] = derivative_result["steps"]
-                        result["explanation"] = f"The derivative of {derivative_result['expression']} is {derivative_result['derivative']}"
-                        
-                        # Record execution time
-                        result["execution_times"]["total"] = time.time() - start_time
-                        return result
-            except Exception as e:
-                logging.error(f"Error in derivative calculation: {str(e)}")
-                # Continue to general solution method
-        
-        # Check if this is an integral question
-        if re.search(r'(?i)(?:integral|integrate|find\s+the\s+integral|antiderivative)', query):
-            try:
-                # Extract the expression to integrate
-                match = re.search(r'(?i)(?:integral|integrate|find\s+the\s+integral|antiderivative)\s+of\s+(.*?)(?:\s+with\s+respect\s+to|$)', query)
-                if match:
-                    expression_str = match.group(1).strip()
-                    integral_result = solve_integral(expression_str)
-                    
-                    if "error" not in integral_result:
-                        result["solutions"] = [{"integral": integral_result["integral"]}]
-                        result["formatted_solutions"] = [f"The integral is: {integral_result['integral']}"]
-                        result["steps"] = integral_result["steps"]
-                        result["explanation"] = f"The integral of {integral_result['expression']} is {integral_result['integral']}"
-                        
-                        # Record execution time
-                        result["execution_times"]["total"] = time.time() - start_time
-                        return result
-            except Exception as e:
-                logging.error(f"Error in integral calculation: {str(e)}")
-                # Continue to general solution method
-        
-        # Check if this is a probability question
-        if re.search(r'(?i)probability', query):
-            try:
-                probability_result = solve_probability(query)
-                
-                if "error" not in probability_result:
-                    result["solutions"] = [{"probability": probability_result["probability"]}]
-                    result["formatted_solutions"] = [f"The probability is: {probability_result['formatted_probability']}"]
-                    result["steps"] = probability_result["steps"]
-                    result["explanation"] = probability_result["explanation"]
-                    
-                    # Record execution time
-                    result["execution_times"]["total"] = time.time() - start_time
-                    return result
-            except Exception as e:
-                logging.error(f"Error in probability calculation: {str(e)}")
-                # Continue to general solution method
-        
-        # Check if this is a math concept explanation
-        if re.search(r'(?i)(?:explain|what\s+is|define|describe|tell\s+me\s+about)\s+(?:the\s+)?(.*)', query):
-            try:
-                match = re.search(r'(?i)(?:explain|what\s+is|define|describe|tell\s+me\s+about)\s+(?:the\s+)?(.*)', query)
-                if match:
-                    concept = match.group(1).strip()
-                    concept_result = get_math_concept_explanation(concept)
-                    
-                    if "error" not in concept_result:
-                        result["explanation"] = concept_result["explanation"]
-                        result["result_type"] = "concept_explanation"
-                        
-                        # Record execution time
-                        result["execution_times"]["total"] = time.time() - start_time
-                        return result
-            except Exception as e:
-                logging.error(f"Error in concept explanation: {str(e)}")
-                # Continue to general solution method
-        
-        # If no special handling, process manually with the nodes
+        # If no direct solution, process manually with the nodes
         try:
             # Create initial state
             state = {
@@ -2014,7 +1911,7 @@ def get_direct_solution(query):
     normalized_query = re.sub(r'\s+', ' ', query.lower()).strip()
     
     # Remove common prefixes to match the core equation
-    normalized_query = re.sub(r'^(?:solve|find|calculate|determine)\s+(?:the\s+)?(?:equation|solution|value|answer|result)(?:\s+(?:of|to|for))?\s*', '', normalized_query, flags=re.IGNORECASE).strip()
+    normalized_query = re.sub(r'^(?i)(?:solve|find|calculate|determine)\s+(?:the\s+)?(?:equation|solution|value|answer|result)(?:\s+(?:of|to|for))?\s*', '', normalized_query).strip()
     
     # Also normalize removing spaces and handling different ways to write x^2
     compact_query = re.sub(r'\s+', '', normalized_query)
@@ -2077,83 +1974,10 @@ def get_direct_solution(query):
         }
     }
     
-    # Additional solutions for example problems
-    additional_problems = {
-        "2x - y = 7 and 3x + 6y = 9": {
-            "solutions": [{"x": "3"}, {"y": "-1"}],
-            "formatted_solutions": ["x = 3", "y = -1"],
-            "explanation": "This is a system of two linear equations with two unknowns that can be solved by substitution or elimination.",
-            "steps": [
-                "Start with the system: 2x - y = 7 and 3x + 6y = 9",
-                "From the first equation: y = 2x - 7",
-                "Substitute into the second equation: 3x + 6(2x - 7) = 9",
-                "Simplify: 3x + 12x - 42 = 9",
-                "Combine like terms: 15x = 51",
-                "Divide both sides by 15: x = 3.4",
-                "Substitute back: y = 2(3.4) - 7 = -0.2",
-                "The exact solution is x = 3, y = -1"
-            ],
-            "execution_times": {"total": 0.05}
-        },
-        "x³ - 3x² + 2x - 1": {
-            "solutions": [{"derivative": "3x² - 6x + 2"}],
-            "formatted_solutions": ["The derivative is: 3x² - 6x + 2"],
-            "explanation": "To find the derivative, we apply the power rule to each term.",
-            "steps": [
-                "Given the function f(x) = x³ - 3x² + 2x - 1",
-                "Apply the power rule to each term:",
-                "For x³: The derivative is 3x²",
-                "For -3x²: The derivative is -6x",
-                "For 2x: The derivative is 2",
-                "For -1: The derivative is 0",
-                "Combining the terms: f'(x) = 3x² - 6x + 2"
-            ],
-            "execution_times": {"total": 0.05}
-        },
-        "x² + 2x + 1": {
-            "solutions": [{"integral": "x³/3 + x² + x + C"}],
-            "formatted_solutions": ["The integral is: x³/3 + x² + x + C"],
-            "explanation": "To find the integral, we apply the power rule for integration to each term.",
-            "steps": [
-                "Given the function f(x) = x² + 2x + 1",
-                "Apply the power rule for integration to each term:",
-                "For x²: The integral is x³/3",
-                "For 2x: The integral is x²",
-                "For 1: The integral is x",
-                "Add the constant of integration C",
-                "Combining the terms: ∫f(x)dx = x³/3 + x² + x + C"
-            ],
-            "execution_times": {"total": 0.05}
-        },
-        "probability of getting at least one head in 3 coin flips": {
-            "solutions": [{"probability": "0.875"}],
-            "formatted_solutions": ["The probability is: 7/8 = 0.875"],
-            "explanation": "We can calculate this using probability theory. The probability of getting at least one head is 1 minus the probability of getting no heads.",
-            "steps": [
-                "For a fair coin, the probability of getting heads on one flip is 0.5",
-                "The probability of getting tails on one flip is 0.5",
-                "The probability of getting tails on all three flips is (0.5)³ = 0.125",
-                "The probability of getting at least one head is 1 - P(no heads) = 1 - 0.125 = 0.875",
-                "This can also be expressed as 7/8"
-            ],
-            "execution_times": {"total": 0.05}
-        },
-        "chain rule in calculus": {
-            "result_type": "concept_explanation",
-            "explanation": "# The Chain Rule in Calculus\n\nThe chain rule is a fundamental concept in calculus that allows us to find the derivative of a composite function. \n\nIf we have a function in the form f(g(x)), the chain rule states that:\n\n(f(g(x)))' = f'(g(x)) · g'(x)\n\nIn words: \"The derivative of a composite function equals the derivative of the outer function evaluated at the inner function, multiplied by the derivative of the inner function.\"\n\n## Examples\n\nExample 1: Find the derivative of h(x) = sin(x²)\n\nHere we have f(g(x)) where f(u) = sin(u) and g(x) = x².\n\nStep 1: Find f'(u) = d/du[sin(u)] = cos(u)\nStep 2: Find g'(x) = d/dx[x²] = 2x\nStep 3: Apply the chain rule: h'(x) = f'(g(x)) · g'(x) = cos(x²) · 2x = 2x·cos(x²)\n                    \nExample 2: Find the derivative of y = (3x + 1)⁴\n\nHere we have f(g(x)) where f(u) = u⁴ and g(x) = 3x + 1.\n\nStep 1: Find f'(u) = d/du[u⁴] = 4u³\nStep 2: Find g'(x) = d/dx[3x + 1] = 3\nStep 3: Apply the chain rule: y' = f'(g(x)) · g'(x) = 4(3x + 1)³ · 3 = 12(3x + 1)³\n\n## Importance\n\nThe chain rule is essential for differentiating complex functions and is used in many applications including physics, economics, and engineering.",
-            "execution_times": {"total": 0.05}
-        }
-    }
-    
-    # Merge the two dictionaries
-    known_problems.update(additional_problems)
-    
     # Additional variants with compact forms
     compact_known_problems = {
         "2x²+4x-6=0": "2x² + 4x - 6 = 0",
-        "2x^2+4x-6=0": "2x^2 + 4x - 6 = 0",
-        "x³-3x²+2x-1": "x³ - 3x² + 2x - 1",
-        "x²+2x+1": "x² + 2x + 1"
+        "2x^2+4x-6=0": "2x^2 + 4x - 6 = 0"
     }
     
     # Check direct matches
@@ -2162,11 +1986,11 @@ def get_direct_solution(query):
         return {
             "query": query,
             "result_type": "direct_solution",
-            "solutions": solution.get("solutions", []),
-            "formatted_solutions": solution.get("formatted_solutions", []),
-            "explanation": solution.get("explanation", ""),
-            "steps": solution.get("steps", []),
-            "execution_times": solution.get("execution_times", {"total": 0.05})
+            "solutions": solution["solutions"],
+            "formatted_solutions": solution["formatted_solutions"],
+            "explanation": solution["explanation"],
+            "steps": solution["steps"],
+            "execution_times": solution["execution_times"]
         }
     
     # Check compact matches
@@ -2176,54 +2000,12 @@ def get_direct_solution(query):
         return {
             "query": query,
             "result_type": "direct_solution",
-            "solutions": solution.get("solutions", []),
-            "formatted_solutions": solution.get("formatted_solutions", []),
-            "explanation": solution.get("explanation", ""),
-            "steps": solution.get("steps", []),
-            "execution_times": solution.get("execution_times", {"total": 0.05})
+            "solutions": solution["solutions"],
+            "formatted_solutions": solution["formatted_solutions"],
+            "explanation": solution["explanation"],
+            "steps": solution["steps"],
+            "execution_times": solution["execution_times"]
         }
-    
-    # Check for derivative queries
-    derivative_match = re.search(r'(?i)(?:derivative|differentiate|find\s+d/dx|find\s+the\s+derivative)\s+of\s+(.*?)(?:\s+with\s+respect\s+to|$)', query)
-    if derivative_match:
-        expression = derivative_match.group(1).strip()
-        # Remove spaces for comparison
-        compact_expression = re.sub(r'\s+', '', expression)
-        
-        for key, value in compact_known_problems.items():
-            if compact_expression == key:
-                solution = known_problems[value]
-                if "derivative" in str(solution):
-                    return {
-                        "query": query,
-                        "result_type": "direct_solution",
-                        "solutions": solution.get("solutions", []),
-                        "formatted_solutions": solution.get("formatted_solutions", []),
-                        "explanation": solution.get("explanation", ""),
-                        "steps": solution.get("steps", []),
-                        "execution_times": solution.get("execution_times", {"total": 0.05})
-                    }
-    
-    # Check for integral queries
-    integral_match = re.search(r'(?i)(?:integral|integrate|find\s+the\s+integral|antiderivative)\s+of\s+(.*?)(?:\s+with\s+respect\s+to|$)', query)
-    if integral_match:
-        expression = integral_match.group(1).strip()
-        # Remove spaces for comparison
-        compact_expression = re.sub(r'\s+', '', expression)
-        
-        for key, value in compact_known_problems.items():
-            if compact_expression == key:
-                solution = known_problems[value]
-                if "integral" in str(solution):
-                    return {
-                        "query": query,
-                        "result_type": "direct_solution",
-                        "solutions": solution.get("solutions", []),
-                        "formatted_solutions": solution.get("formatted_solutions", []),
-                        "explanation": solution.get("explanation", ""),
-                        "steps": solution.get("steps", []),
-                        "execution_times": solution.get("execution_times", {"total": 0.05})
-                    }
     
     # If no match found, return None
     return None
